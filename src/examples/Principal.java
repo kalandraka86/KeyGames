@@ -51,16 +51,16 @@ public class Principal {
 	private void initialize() {
 		frame = new PadreJFrame();
 		frame.setTitle("Catálogo");
-		frame.setBounds(100, 100, 450, 300);
+		frame.setBounds(100, 100, 571, 376);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frame.getContentPane().setLayout(null);
 		
 		btnDetalles = new JButton("Ver detalles");
-		btnDetalles.setBounds(315, 105, 100, 69);
+		btnDetalles.setBounds(348, 224, 117, 72);
 		frame.getContentPane().add(btnDetalles);
 		
 		panelCaratula = new JPanel((LayoutManager) null);
-		panelCaratula.setBounds(100, 66, 119, 161);
+		panelCaratula.setBounds(75, 66, 178, 230);
 		frame.getContentPane().add(panelCaratula);
 		panelCaratula.setLayout(new BorderLayout());
 		
@@ -68,7 +68,7 @@ public class Principal {
 		panelCaratula.add(lbl, BorderLayout.CENTER);
 		
 		comboBox = new JComboBox();
-		comboBox.setBounds(60, 27, 200, 27);
+		comboBox.setBounds(320, 52, 200, 27);
 		frame.getContentPane().add(comboBox);
 		btnDetalles.addActionListener(new BtnNewButtonActionListener());
 		

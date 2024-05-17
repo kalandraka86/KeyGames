@@ -16,41 +16,40 @@ import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
+import com.jgoodies.forms.layout.FormLayout;
+import com.jgoodies.forms.layout.ColumnSpec;
+import com.jgoodies.forms.layout.FormSpecs;
+import com.jgoodies.forms.layout.RowSpec;
+import javax.swing.BoxLayout;
 
 public class Detalles {
 
 	private JPanel panelRellenar;
 	private JPanel panelBotones;
-	private JButton btnPrevious;
-	private JButton btnNext;
-	private JButton btnFirst;
-	private JButton btnLast;
-	private JButton btnExit;
+	private JButton btnComprar;
+	private JButton btnValoracion;
+	private JButton btnVolver;
 	private List<Videojuego> videojuegos;
-	private int indice = 0;
-	private int indCon = 1;
-	private JLabel lblCodigo;
-	private JTextField textFieldCodigo;
-	private JLabel videojuegoslbl;
 	private JPanel panel;
-	private JLabel lbl;
 	private JLabel lblPrecio;
 	private JTextField textFieldPrecio;
 	private JLabel lblNombre;
 	private JTextField textField_Nombre;
 	private JLabel lblGenero;
 	private JTextField textField_Genero;
-	private JTextField textField_Image;
 	private JLabel lblStock;
 	private JTextField textFieldStock;
 	private JButton btnDescripcion;
+	private JLabel lblPlataformas;
+	private JTextField textFieldPlataformas;
+	private PadreJFrame frame = new PadreJFrame();
 
 	public Detalles() throws IOException {
 		videojuegos = new ArrayList<>();
 		videojuegos.clear();
 		recogerDatosDB();
 
-		PadreJFrame frame = new PadreJFrame();
+		
 		frame.setTitle("Detalles del videojuego");
 		frame.setBounds(100, 100, 700, 500);
 
@@ -58,28 +57,6 @@ public class Detalles {
 		frame.getContentPane().add(panelRellenar, BorderLayout.CENTER);
 		panelRellenar.setLayout(null);
 		panelRellenar.setBackground(new Color(72, 79, 84, 255));
-
-		lblCodigo = new JLabel("  Código");
-		lblCodigo.setBackground(new Color(119, 128, 136));
-		lblCodigo.setOpaque(true);
-		lblCodigo.setFont(new Font("Lucida Grande", Font.PLAIN, 18));
-		lblCodigo.setBounds(49, 43, 85, 36);
-		lblCodigo.setForeground(Color.white);
-		panelRellenar.add(lblCodigo);
-
-		textFieldCodigo = new JTextField();
-		textFieldCodigo.setFont(new Font("Lucida Grande", Font.PLAIN, 18));
-		textFieldCodigo.setText((String) null);
-		textFieldCodigo.setEditable(false);
-		textFieldCodigo.setColumns(10);
-		textFieldCodigo.setBounds(171, 48, 241, 26);
-		panelRellenar.add(textFieldCodigo);
-
-		videojuegoslbl = new JLabel("1/0");
-		videojuegoslbl.setFont(new Font("Lucida Grande", Font.PLAIN, 20));
-		videojuegoslbl.setBounds(537, 19, 78, 36);
-		videojuegoslbl.setForeground(Color.white);
-		panelRellenar.add(videojuegoslbl);
 
 		panel = new JPanel(new BorderLayout());
 		panel.setBounds(467, 67, 178, 230);
@@ -105,7 +82,7 @@ public class Detalles {
 		lblNombre.setBackground(new Color(119, 128, 136));
 		lblNombre.setOpaque(true);
 		lblNombre.setFont(new Font("Lucida Grande", Font.PLAIN, 18));
-		lblNombre.setBounds(49, 103, 95, 36);
+		lblNombre.setBounds(49, 37, 95, 36);
 		lblNombre.setForeground(Color.white);
 		panelRellenar.add(lblNombre);
 
@@ -114,14 +91,14 @@ public class Detalles {
 		textField_Nombre.setFont(new Font("Lucida Grande", Font.PLAIN, 18));
 		textField_Nombre.setEditable(false);
 		textField_Nombre.setColumns(10);
-		textField_Nombre.setBounds(171, 108, 241, 26);
+		textField_Nombre.setBounds(171, 42, 241, 26);
 		panelRellenar.add(textField_Nombre);
 
 		lblGenero = new JLabel("  Género");
 		lblGenero.setBackground(new Color(119, 128, 136));
 		lblGenero.setOpaque(true);
 		lblGenero.setFont(new Font("Lucida Grande", Font.PLAIN, 18));
-		lblGenero.setBounds(49, 251, 85, 36);
+		lblGenero.setBounds(49, 185, 85, 36);
 		lblGenero.setForeground(Color.white);
 		panelRellenar.add(lblGenero);
 
@@ -130,14 +107,14 @@ public class Detalles {
 		textField_Genero.setFont(new Font("Lucida Grande", Font.PLAIN, 18));
 		textField_Genero.setEditable(false);
 		textField_Genero.setColumns(10);
-		textField_Genero.setBounds(160, 256, 252, 26);
+		textField_Genero.setBounds(160, 190, 252, 26);
 		panelRellenar.add(textField_Genero);
 
 		lblStock = new JLabel("  Stock");
 		lblStock.setBackground(new Color(119, 128, 136));
 		lblStock.setOpaque(true);
 		lblStock.setFont(new Font("Lucida Grande", Font.PLAIN, 18));
-		lblStock.setBounds(49, 325, 85, 36);
+		lblStock.setBounds(49, 325, 78, 36);
 		lblStock.setForeground(Color.white);
 		panelRellenar.add(lblStock);
 
@@ -152,7 +129,7 @@ public class Detalles {
 		btnDescripcion = new JButton("Ver descripción");
 		btnDescripcion.addActionListener(new BtnActionListener());
 		btnDescripcion.setFont(new Font("Lucida Grande", Font.PLAIN, 16));
-		btnDescripcion.setBounds(132, 170, 197, 48);
+		btnDescripcion.setBounds(132, 104, 197, 48);
 		panelRellenar.add(btnDescripcion);
 
 		panelBotones = new JPanel();
@@ -160,41 +137,44 @@ public class Detalles {
 		panelBotones.setBounds(0, 405, 710, 48);
 		panelBotones.setForeground(new Color(72, 79, 84, 255));
 		panelRellenar.add(panelBotones);
+
+		btnValoracion = new JButton("Valoración");
+		btnValoracion.setBounds(422, 6, 135, 30);
+		btnValoracion.setFont(new Font("Lucida Grande", Font.PLAIN, 18));
+		btnValoracion.addActionListener(new BtnActionListener());
+		panelBotones.add(btnValoracion);
+
+		btnVolver = new JButton("Volver");
+		btnVolver.setBounds(125, 6, 114, 30);
+		btnVolver.setFont(new Font("Lucida Grande", Font.PLAIN, 18));
+		btnVolver.addActionListener(new BtnActionListener());
 		panelBotones.setLayout(null);
+		panelBotones.add(btnVolver);
 
-		btnPrevious = new JButton("Previous");
-		btnPrevious.setFont(new Font("Lucida Grande", Font.PLAIN, 18));
-		btnPrevious.setBounds(111, 5, 130, 37);
-		panelBotones.add(btnPrevious);
-		btnPrevious.addActionListener(new BtnActionListener());
+		btnComprar = new JButton("Comprar");
+		btnComprar.setBounds(239, 6, 183, 30);
+		btnComprar.setFont(new Font("Lucida Grande", Font.PLAIN, 18));
+		panelBotones.add(btnComprar);
+		btnComprar.addActionListener(new BtnActionListener());
+		panelBotones.add(btnComprar);
 
-		btnNext = new JButton("Next");
-		btnNext.setBounds(246, 5, 85, 37);
-		btnNext.setFont(new Font("Lucida Grande", Font.PLAIN, 18));
-		panelBotones.add(btnNext);
-		btnNext.addActionListener(new BtnActionListener());
+		lblPlataformas = new JLabel("  Plataformas");
+		lblPlataformas.setOpaque(true);
+		lblPlataformas.setForeground(Color.WHITE);
+		lblPlataformas.setFont(new Font("Lucida Grande", Font.PLAIN, 18));
+		lblPlataformas.setBackground(new Color(119, 128, 136));
+		lblPlataformas.setBounds(49, 257, 127, 36);
+		panelRellenar.add(lblPlataformas);
 
-		btnFirst = new JButton("First");
-		btnFirst.setBounds(336, 5, 85, 37);
-		btnFirst.setFont(new Font("Lucida Grande", Font.PLAIN, 18));
-		panelBotones.add(btnFirst);
-		btnFirst.addActionListener(new BtnActionListener());
-
-		btnLast = new JButton("Last");
-		btnLast.setBounds(423, 5, 85, 37);
-		btnLast.setFont(new Font("Lucida Grande", Font.PLAIN, 18));
-		btnLast.addActionListener(new BtnActionListener());
-		panelBotones.add(btnLast);
-
-		btnExit = new JButton("Exit");
-		btnExit.setBounds(508, 5, 85, 37);
-		btnExit.setFont(new Font("Lucida Grande", Font.PLAIN, 18));
-		btnExit.addActionListener(new BtnActionListener());
-		panelBotones.add(btnExit);
+		textFieldPlataformas = new JTextField();
+		textFieldPlataformas.setText((String) null);
+		textFieldPlataformas.setFont(new Font("Lucida Grande", Font.PLAIN, 18));
+		textFieldPlataformas.setEditable(false);
+		textFieldPlataformas.setColumns(10);
+		textFieldPlataformas.setBounds(208, 262, 204, 26);
+		panelRellenar.add(textFieldPlataformas);
 
 		leerLista();
-
-		comprobarPos();
 
 		frame.setLocationRelativeTo(null);
 		frame.setResizable(false);
@@ -204,20 +184,6 @@ public class Detalles {
 	private void recogerDatosDB() {
 		// TODO Auto-generated method stub
 
-	}
-
-	private void comprobarPos() {
-		if (indice <= 0) {
-			btnPrevious.setEnabled(false);
-			btnNext.setEnabled(true);
-		}
-		if (indice < (videojuegos.size() - 1) && indice > 0)
-			btnPrevious.setEnabled(true);
-
-		if (indice >= (videojuegos.size() - 1)) {
-			btnNext.setEnabled(false);
-			btnPrevious.setEnabled(true);
-		}
 	}
 
 	private void leerLista() {
@@ -241,54 +207,13 @@ public class Detalles {
 	class BtnActionListener implements ActionListener {
 		public void actionPerformed(ActionEvent e) {
 
-			if (e.getSource() == btnExit) {
-				System.exit(0);
+			if (e.getSource() == btnVolver) {
+				frame.dispose();
+			}
+			if (e.getSource() == btnValoracion) {
+				new Valoracion();
 			}
 
-			if (e.getSource() == btnNext) {
-				comprobarPos();
-				videojuegoslbl.setText((indCon += 1) + "/" + videojuegos.size());
-
-				indice += 1;
-				leerLista();
-				comprobarPos();
-			}
-
-			if (e.getSource() == btnPrevious) {
-				comprobarPos();
-				videojuegoslbl.setText((indCon -= 1) + "/" + videojuegos.size());
-
-				indice -= 1;
-				leerLista();
-				comprobarPos();
-			}
-
-			if (e.getSource() == btnFirst) {
-				comprobarPos();
-				videojuegoslbl.setText(1 + "/" + videojuegos.size());
-				btnNext.setEnabled(true);
-
-				indice = 0;
-				leerLista();
-				comprobarPos();
-			}
-
-			if (e.getSource() == btnLast) {
-				comprobarPos();
-				videojuegoslbl.setText(videojuegos.size() + "/" + videojuegos.size());
-				btnPrevious.setEnabled(true);
-
-				indice = videojuegos.size() - 1;
-				leerLista();
-				comprobarPos();
-			}
-
-		}
-
-	}
-
-	private class BtnNewButtonActionListener implements ActionListener {
-		public void actionPerformed(ActionEvent e) {
 		}
 	}
 }
