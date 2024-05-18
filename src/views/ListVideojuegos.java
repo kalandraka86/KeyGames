@@ -114,6 +114,7 @@ public class ListVideojuegos extends JFrame {
 		}
 		
 	}
+	
 
 	private class ClientesActionListener implements ActionListener {
 		public void actionPerformed(ActionEvent e) {

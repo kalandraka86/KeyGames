@@ -7,6 +7,7 @@ import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.IOException;
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -20,6 +21,9 @@ import com.jgoodies.forms.layout.FormLayout;
 import com.jgoodies.forms.layout.ColumnSpec;
 import com.jgoodies.forms.layout.FormSpecs;
 import com.jgoodies.forms.layout.RowSpec;
+
+import mvc.Videojuego;
+
 import javax.swing.BoxLayout;
 
 public class Detalles {
@@ -44,23 +48,24 @@ public class Detalles {
 	private JTextField textFieldPlataformas;
 	private PadreJFrame frame = new PadreJFrame();
 
-	public Detalles() throws IOException {
+	public Detalles(Principal p) throws IOException, ClassNotFoundException, SQLException {
 		videojuegos = new ArrayList<>();
 		videojuegos.clear();
-		recogerDatosDB();
-
-		
-		frame.setTitle("Detalles del videojuego");
-		frame.setBounds(100, 100, 700, 500);
 
 		panelRellenar = new JPanel();
 		frame.getContentPane().add(panelRellenar, BorderLayout.CENTER);
 		panelRellenar.setLayout(null);
 		panelRellenar.setBackground(new Color(72, 79, 84, 255));
-
+		
 		panel = new JPanel(new BorderLayout());
 		panel.setBounds(467, 67, 178, 230);
 		panelRellenar.add(panel);
+		JLabel lbl = new JLabel(new ImageIcon(p.nJuego()));
+		panel.add(lbl, BorderLayout.CENTER);
+		System.out.println(p.nJuego());
+		
+		frame.setTitle("Detalles del videojuego");
+		frame.setBounds(100, 100, 700, 500);
 
 		lblPrecio = new JLabel("  Precio");
 		lblPrecio.setBackground(new Color(119, 128, 136));
@@ -174,35 +179,12 @@ public class Detalles {
 		textFieldPlataformas.setBounds(208, 262, 204, 26);
 		panelRellenar.add(textFieldPlataformas);
 
-		leerLista();
 
 		frame.setLocationRelativeTo(null);
 		frame.setResizable(false);
 		frame.setVisible(true);
 	}
 
-	private void recogerDatosDB() {
-		// TODO Auto-generated method stub
-
-	}
-
-	private void leerLista() {
-//			Videojuego videojuegoActual = videojuegos.get(indice);
-//			panel.removeAll();
-//			panel.repaint();
-//			panel.revalidate();
-//			NombretextField.setText(videojuegoActual.getNombre());
-//			ApellidostextField.setText(videojuegoActual.getApellidos());
-//			EdadtextField.setText(videojuegoActual.getEdad() + "");
-//			EmailtextField.setText(videojuegoActual.getEmail());
-//			NotatextField.setText(videojuegoActual.getNota() + "");
-		JLabel lbl = new JLabel(new ImageIcon("caratulas/ds.png"));
-
-		panel.add(lbl, BorderLayout.CENTER);
-//			panel.repaint();
-//			panel.revalidate();
-//			frame.setVisible(true);
-	}
 
 	class BtnActionListener implements ActionListener {
 		public void actionPerformed(ActionEvent e) {

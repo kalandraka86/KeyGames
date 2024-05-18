@@ -92,9 +92,7 @@ public class Videojuego {
 
 	@Override
 	public String toString() {
-		return "Videojuego [Codigo=" + Codigo + ", Nombre=" + Nombre + ", Descripcion=" + Descripcion + ", Genero="
-				+ Genero + ", Imagen=" + Imagen + ", Stock=" + Stock + ", Plataformas=" + Plataformas + ", Precio="
-				+ Precio + "]";
+		return Nombre;
 	}
 
 	
