@@ -87,7 +87,7 @@ public class Detalles {
 		textField_Nombre.setFont(new Font("Lucida Grande", Font.PLAIN, 18));
 		textField_Nombre.setEditable(false);
 		textField_Nombre.setColumns(10);
-		textField_Nombre.setBounds(171, 42, 286, 26);
+		textField_Nombre.setBounds(171, 42, 303, 26);
 		panelRellenar.add(textField_Nombre);
 
 		lblGenero = new JLabel("  Género");
@@ -195,7 +195,7 @@ public class Detalles {
 				frame.dispose();
 			}
 			if (e.getSource() == btnValoracion) {
-				new Valoracion(videojuego);
+				new ValoracionFrame(videojuego);
 			}
 			if(e.getSource() == btnDescripcion) {
 				JOptionPane.showMessageDialog(null, videojuego.getDescripcion(),videojuego.getNombre(),JOptionPane.INFORMATION_MESSAGE);

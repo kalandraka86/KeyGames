@@ -11,7 +11,7 @@ public class UsuarioService {
 private final String tabla = "Usuario";
 	
 	
-public void save(Connection conexion, Usuario usuario) throws SQLException {
+public void saveUsuario(Connection conexion, Usuario usuario) throws SQLException {
 	try {
 		PreparedStatement consulta;
 			consulta = conexion.prepareStatement("INSERT INTO " + this.tabla + "(Username, Password, Direccion, Correo, Rol, Telefono) VALUES(?, ?, ?, ?, ?, ?)");

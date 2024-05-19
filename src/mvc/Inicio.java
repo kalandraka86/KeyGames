@@ -102,15 +102,7 @@ public class Inicio extends JFrame {
 				System.exit(0);
 			}
 			if (e.getSource() == btnConectar) {
-				try {
-					File soundFile = new File("files/lujazo.wav");
-					AudioInputStream audioIn = AudioSystem.getAudioInputStream(soundFile);
-					Clip clip = AudioSystem.getClip();
-					clip.open(audioIn);
-					clip.start();
-				} catch (Exception ex) {
-					ex.printStackTrace();
-				}
+				
 			}
 
 			if (e.getSource() == btnRegistrar) {

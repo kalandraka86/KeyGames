@@ -126,7 +126,7 @@ public class SaveView extends JFrame {
 				
 				
 				try {
-					services.save(mvc.Conexion.obtener(), user);
+					services.saveUsuario(mvc.Conexion.obtener(), user);
 					SaveView.this.dispose();
 					ListView vista = new ListView();
 					vista.setVisible(true);

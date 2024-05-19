@@ -11,8 +11,7 @@ import java.util.List;
 public class CompraService {
 	private final String tabla="Compra";
 	
-	
-	public void save(Connection conexion, Compra compra) throws SQLException {
+	public void saveCompra(Connection conexion, Compra compra) throws SQLException {
 		try {
 			PreparedStatement consulta;
 				consulta = conexion.prepareStatement("INSERT INTO " + this.tabla + "(Codigo_usuario, Codigo_videojuego, Fecha_compra, Unidades) VALUES(?, ?, ?, ?)");

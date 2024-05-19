@@ -1,6 +1,5 @@
 package mvc;
 
-import java.awt.BorderLayout;
 import java.awt.Color;
 import java.util.Timer;
 import java.util.TimerTask;
@@ -8,66 +7,60 @@ import java.util.TimerTask;
 import javax.swing.ImageIcon;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
-import javax.swing.JPanel;
 import javax.swing.JProgressBar;
 
-public class Intro extends JFrame {
+import examples.PadreJFrame;
+
+public class Intro{
 
 	private JLabel imagenlbl;
 	private JProgressBar progressBar;
+	private PadreJFrame frame = new PadreJFrame();
 
 	public Intro() {
-		super("Bienvenido a KeyGames!!!");
-		initialize();
-	}
-
-	private void initialize() {
-		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-
-		// Establecer el color de fondo
-		setBackground(new Color(6, 16, 25));
-
-		// Crear un panel para contener la imagen y la barra de progreso
-		JPanel contentPanel = new JPanel(new BorderLayout());
-		contentPanel.setOpaque(false); // Hacer que el panel sea transparente
-		add(contentPanel);
-
-		// Agregar la imagen al panel en el centro
-		ImageIcon imagen = new ImageIcon("files/logo.jpg");
-		imagenlbl = new JLabel(imagen);
-		contentPanel.add(imagenlbl, BorderLayout.CENTER);
-
-		// Crear y agregar la barra de progreso en la parte inferior
-		progressBar = new JProgressBar();
-		progressBar.setStringPainted(false);
-		contentPanel.add(progressBar, BorderLayout.SOUTH);
-
-		// Configurar temporizador para simular progreso de carga
-		Timer timer = new Timer();
-		timer.schedule(new TimerTask() {
-			int progreso = 0;
-
-			@Override
-			public void run() {
-				progreso += 10;
-				progressBar.setValue(progreso);
-
-				if (progreso == 100) {
-					dispose();
-					Inicio i = new Inicio();
-					cancel();
-				}
-			}
-		}, 0, 500); // 500 milisegundos
-
-		// Ajustar automáticamente el tamaño del JFrame
-		pack();
-
-		// Centrar la ventana en la pantalla
-		setLocationRelativeTo(null);
 		
-		setResizable(false);
+		frame.getContentPane().setForeground(new Color(72, 79, 84, 255));
+		frame.setForeground(new Color(72, 79, 84, 255));
+		frame.setBounds(100, 100, 455, 416);
+		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		frame.getContentPane().setLayout(null);
+		frame.setLocationRelativeTo(null);
+		
+		
+        ImageIcon imagen = new ImageIcon("imagenes/logosin.png"); 
+		imagenlbl = new JLabel(imagen);
+		imagenlbl.setBounds(92, 41, 290, 296);
+		frame.getContentPane().add(imagenlbl);
+		frame.setVisible(true);
+		
+		// Crear y configurar la barra de progreso
+        progressBar = new JProgressBar();
+        progressBar.setBounds(53, 349, 350, 20);
+        progressBar.setStringPainted(false); // Mostrar porcentaje
+        frame.getContentPane().add(progressBar);
 
-		setVisible(true);
+        frame.setVisible(true);
+
+        // Configurar temporizador para simular progreso de carga
+        Timer timer = new Timer();
+        timer.schedule(new TimerTask() {
+            int progreso = 0;
+
+            @Override
+            public void run() {
+                // Incrementar el progreso
+                progreso += 10;
+                progressBar.setValue(progreso);
+
+                if (progreso == 100) {
+                    // Cuando la barra de progreso llega al 100%, cerrar el JFrame
+                	frame.dispose();
+                    Inicio i = new Inicio();
+                    cancel(); // Detener el temporizador
+                }
+            }
+        }, 0, 500); // Cambiado a 500 milisegundos (0 segundos de espera antes de iniciar, 500 milisegundos entre cada actualización)
+
+
 	}
 }
