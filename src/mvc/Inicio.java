@@ -71,7 +71,7 @@ public class Inicio extends JFrame {
 		getContentPane().add(btnConectar);
 
 		passText = new JPasswordField();
-		passText.setBackground(new Color(254, 166, 81));
+		passText.setBackground(new Color(231, 162, 83));
 		passText.setHorizontalAlignment(SwingConstants.CENTER);
 		passText.addActionListener(new btnActionListener());
 		passText.setBounds(155, 124, 145, 26);

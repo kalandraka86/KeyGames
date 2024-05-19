@@ -1,6 +1,7 @@
 package mvc;
 
 import java.awt.BorderLayout;
+import java.awt.Color;
 import java.util.Timer;
 import java.util.TimerTask;
 
@@ -16,19 +17,23 @@ public class Intro extends JFrame {
 	private JProgressBar progressBar;
 
 	public Intro() {
-//		PadreJFrame frame = new PadreJFrame();
-		JFrame frame = new JFrame();
-		frame.setTitle("Bienvenido a KeyGames!!!");
+		super("Bienvenido a KeyGames!!!");
+		initialize();
+	}
 
-		frame.setBounds(0, 200, 200, 200);
+	private void initialize() {
+		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+
+		// Establecer el color de fondo
+		setBackground(new Color(6, 16, 25));
 
 		// Crear un panel para contener la imagen y la barra de progreso
 		JPanel contentPanel = new JPanel(new BorderLayout());
 		contentPanel.setOpaque(false); // Hacer que el panel sea transparente
-		frame.add(contentPanel);
+		add(contentPanel);
 
 		// Agregar la imagen al panel en el centro
-		ImageIcon imagen = new ImageIcon("imagenes/logo.png");
+		ImageIcon imagen = new ImageIcon("files/logo.jpg");
 		imagenlbl = new JLabel(imagen);
 		contentPanel.add(imagenlbl, BorderLayout.CENTER);
 
@@ -48,7 +53,7 @@ public class Intro extends JFrame {
 				progressBar.setValue(progreso);
 
 				if (progreso == 100) {
-					frame.dispose();
+					dispose();
 					Inicio i = new Inicio();
 					cancel();
 				}
@@ -56,13 +61,13 @@ public class Intro extends JFrame {
 		}, 0, 500); // 500 milisegundos
 
 		// Ajustar automáticamente el tamaño del JFrame
-		frame.pack();
+		pack();
 
 		// Centrar la ventana en la pantalla
-		frame.setLocationRelativeTo(null);
+		setLocationRelativeTo(null);
+		
+		setResizable(false);
 
-		frame.setResizable(false);
-
-		frame.setVisible(true);
+		setVisible(true);
 	}
 }
