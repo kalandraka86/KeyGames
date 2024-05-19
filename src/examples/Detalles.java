@@ -2,29 +2,20 @@ package examples;
 
 import java.awt.BorderLayout;
 import java.awt.Color;
-import java.awt.FlowLayout;
 import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.IOException;
 import java.sql.SQLException;
-import java.util.ArrayList;
-import java.util.List;
 
-import javax.swing.Icon;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
-import com.jgoodies.forms.layout.FormLayout;
-import com.jgoodies.forms.layout.ColumnSpec;
-import com.jgoodies.forms.layout.FormSpecs;
-import com.jgoodies.forms.layout.RowSpec;
 
 import mvc.Videojuego;
-
-import javax.swing.BoxLayout;
 
 public class Detalles {
 
@@ -33,24 +24,24 @@ public class Detalles {
 	private JButton btnComprar;
 	private JButton btnValoracion;
 	private JButton btnVolver;
-	private List<Videojuego> videojuegos;
 	private JPanel panel;
 	private JLabel lblPrecio;
 	private JTextField textFieldPrecio;
 	private JLabel lblNombre;
 	private JTextField textField_Nombre;
 	private JLabel lblGenero;
-	private JTextField textField_Genero;
+	private JTextField txtDdd;
 	private JLabel lblStock;
 	private JTextField textFieldStock;
 	private JButton btnDescripcion;
 	private JLabel lblPlataformas;
 	private JTextField textFieldPlataformas;
 	private PadreJFrame frame = new PadreJFrame();
+	private static Videojuego videojuego = null;
+	private JLabel lbl;
 
 	public Detalles(Principal p) throws IOException, ClassNotFoundException, SQLException {
-		videojuegos = new ArrayList<>();
-		videojuegos.clear();
+		videojuego = p.videojuegoSeleccionado();
 
 		panelRellenar = new JPanel();
 		frame.getContentPane().add(panelRellenar, BorderLayout.CENTER);
@@ -58,13 +49,13 @@ public class Detalles {
 		panelRellenar.setBackground(new Color(72, 79, 84, 255));
 		
 		panel = new JPanel(new BorderLayout());
-		panel.setBounds(467, 67, 178, 230);
+		panel.setBounds(486, 67, 150, 192);
 		panelRellenar.add(panel);
-		JLabel lbl = new JLabel(new ImageIcon(p.nJuego()));
-		panel.add(lbl, BorderLayout.CENTER);
-		System.out.println(p.nJuego());
 		
-		frame.setTitle("Detalles del videojuego");
+		lbl = new JLabel(new ImageIcon(videojuego.getImagen()));
+		panel.add(lbl, BorderLayout.CENTER);
+		
+		frame.setTitle("Detalles de "+videojuego.getNombre());
 		frame.setBounds(100, 100, 700, 500);
 
 		lblPrecio = new JLabel("  Precio");
@@ -76,7 +67,7 @@ public class Detalles {
 		panelRellenar.add(lblPrecio);
 
 		textFieldPrecio = new JTextField();
-		textFieldPrecio.setText((String) null);
+		textFieldPrecio.setText(videojuego.getPrecio()+" €");
 		textFieldPrecio.setFont(new Font("Lucida Grande", Font.PLAIN, 18));
 		textFieldPrecio.setEditable(false);
 		textFieldPrecio.setColumns(10);
@@ -92,11 +83,11 @@ public class Detalles {
 		panelRellenar.add(lblNombre);
 
 		textField_Nombre = new JTextField();
-		textField_Nombre.setText((String) null);
+		textField_Nombre.setText(videojuego.getNombre());
 		textField_Nombre.setFont(new Font("Lucida Grande", Font.PLAIN, 18));
 		textField_Nombre.setEditable(false);
 		textField_Nombre.setColumns(10);
-		textField_Nombre.setBounds(171, 42, 241, 26);
+		textField_Nombre.setBounds(171, 42, 286, 26);
 		panelRellenar.add(textField_Nombre);
 
 		lblGenero = new JLabel("  Género");
@@ -107,13 +98,13 @@ public class Detalles {
 		lblGenero.setForeground(Color.white);
 		panelRellenar.add(lblGenero);
 
-		textField_Genero = new JTextField();
-		textField_Genero.setText((String) null);
-		textField_Genero.setFont(new Font("Lucida Grande", Font.PLAIN, 18));
-		textField_Genero.setEditable(false);
-		textField_Genero.setColumns(10);
-		textField_Genero.setBounds(160, 190, 252, 26);
-		panelRellenar.add(textField_Genero);
+		txtDdd = new JTextField();
+		txtDdd.setText(videojuego.getGenero());
+		txtDdd.setFont(new Font("Lucida Grande", Font.PLAIN, 18));
+		txtDdd.setEditable(false);
+		txtDdd.setColumns(10);
+		txtDdd.setBounds(160, 190, 178, 26);
+		panelRellenar.add(txtDdd);
 
 		lblStock = new JLabel("  Stock");
 		lblStock.setBackground(new Color(119, 128, 136));
@@ -124,11 +115,20 @@ public class Detalles {
 		panelRellenar.add(lblStock);
 
 		textFieldStock = new JTextField();
-		textFieldStock.setText((String) null);
+		textFieldStock.setBackground(new Color(72, 80, 84));
 		textFieldStock.setFont(new Font("Lucida Grande", Font.PLAIN, 18));
 		textFieldStock.setEditable(false);
+		textFieldStock.setForeground(null);
 		textFieldStock.setColumns(10);
-		textFieldStock.setBounds(160, 335, 252, 26);
+		textFieldStock.setBounds(188, 335, 150, 26);
+		if(videojuego.getStock() > 0) {
+			textFieldStock.setText("DISPONIBLE");
+			textFieldStock.setForeground(Color.GREEN);
+		}
+		else {
+			textFieldStock.setText("NO DISPONIBLE");
+			textFieldStock.setForeground(Color.RED);
+		}
 		panelRellenar.add(textFieldStock);
 
 		btnDescripcion = new JButton("Ver descripción");
@@ -172,11 +172,11 @@ public class Detalles {
 		panelRellenar.add(lblPlataformas);
 
 		textFieldPlataformas = new JTextField();
-		textFieldPlataformas.setText((String) null);
+		textFieldPlataformas.setText(" "+videojuego.getPlataformas());
 		textFieldPlataformas.setFont(new Font("Lucida Grande", Font.PLAIN, 18));
 		textFieldPlataformas.setEditable(false);
 		textFieldPlataformas.setColumns(10);
-		textFieldPlataformas.setBounds(208, 262, 204, 26);
+		textFieldPlataformas.setBounds(208, 262, 247, 26);
 		panelRellenar.add(textFieldPlataformas);
 
 
@@ -187,15 +187,19 @@ public class Detalles {
 
 
 	class BtnActionListener implements ActionListener {
+
+
 		public void actionPerformed(ActionEvent e) {
 
 			if (e.getSource() == btnVolver) {
 				frame.dispose();
 			}
 			if (e.getSource() == btnValoracion) {
-				new Valoracion();
+				new Valoracion(videojuego);
 			}
-
+			if(e.getSource() == btnDescripcion) {
+				JOptionPane.showMessageDialog(null, videojuego.getDescripcion(),videojuego.getNombre(),JOptionPane.INFORMATION_MESSAGE);
+			}
 		}
 	}
 }

@@ -18,6 +18,7 @@ import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 
 import mvc.Videojuego;
@@ -95,7 +96,12 @@ public class Principal {
         	
         	if(e.getSource() == btnDetalles) {
         		try {
-					new Detalles(Principal.this);
+        			if(Principal.this == null || comboBox.getSelectedItem() == null) {
+        				JOptionPane.showMessageDialog(null, "Selecciona un videojuego del catálogo");
+        			}
+        			else
+        				new Detalles(Principal.this);
+					
 				} catch (ClassNotFoundException | IOException | SQLException e1) {
 					// TODO Auto-generated catch block
 					e1.printStackTrace();
@@ -114,7 +120,7 @@ public class Principal {
         }
     }
     
-    public String nJuego() {
-		return seleccionado.getImagen();
+    public Videojuego videojuegoSeleccionado() {
+		return (Videojuego) comboBox.getSelectedItem();
     }
 }
