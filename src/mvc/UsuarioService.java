@@ -31,7 +31,7 @@ public class UsuarioService {
 	    try {
 	        PreparedStatement consulta;
 	        consulta = conexion.prepareStatement("UPDATE " + this.tabla
-	                + " SET Username = ?, Password = ?, Direccion = ?, Correo = ?, Rol = ?, Telefono = ? WHERE UsuarioID = ?");
+	                + " SET Username = ?, Password = ?, Direccion = ?, Correo = ?, Rol = ?, Telefono = ? WHERE Codigo = ?");
 	        consulta.setString(1, usuario.getUsername());
 	        consulta.setString(2, usuario.getPassword());
 	        consulta.setString(3, usuario.getDireccion());
