@@ -1,7 +1,9 @@
 package examples;
 
 import java.awt.BorderLayout;
+import java.awt.Color;
 import java.awt.EventQueue;
+import java.awt.Font;
 import java.awt.LayoutManager;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -21,106 +23,120 @@ import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 
+import mvc.Inicio;
 import mvc.Videojuego;
 import mvc.VideojuegoService;
 
-public class Principal {
+public class Principal extends JFrame {
 
-    private PadreJFrame frame;
-    private JButton btnDetalles;
-    private JPanel panelCaratula;
-    private JComboBox comboBox;
-    private List<Videojuego> videojuegos = new ArrayList<>();
-    private JLabel lbl = new JLabel();
-    public Videojuego seleccionado = new Videojuego();
+	private PadreJFrame frame;
+	private JButton btnDetalles;
+	private JPanel panelCaratula;
+	private JComboBox comboBox;
+	private List<Videojuego> videojuegos = new ArrayList<>();
+	private JLabel lbl = new JLabel();
+	public Videojuego seleccionado = new Videojuego();
+	private Inicio inicio = new Inicio();
+	private JComboBox comboBox_1;
+	private JLabel selecciona;
+	private JButton btnCuenta;
 
-    /**
-     * Launch the application.
-     */
-    public static void main(String[] args) {
-        EventQueue.invokeLater(new Runnable() {
-            public void run() {
-                try {
-                    Principal window = new Principal();
-                    window.frame.setVisible(true);
-                } catch (Exception e) {
-                    e.printStackTrace();
-                }
-            }
-        });
-    }
+	public Principal(Inicio i) throws ClassNotFoundException, SQLException {
 
-    /**
-     * Create the application.
-     * 
-     * @throws SQLException
-     * @throws ClassNotFoundException
-     */
-    public Principal() throws ClassNotFoundException, SQLException {
-        videojuegos.clear();
-        VideojuegoService videojuegoservice = new VideojuegoService();
-        videojuegos = videojuegoservice.getAllVideojuegos(mvc.Conexion.obtener());
-        frame = new PadreJFrame();
-        frame.setTitle("Catálogo");
-        frame.setBounds(100, 100, 571, 376);
-        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        frame.getContentPane().setLayout(null);
+		comboBox_1 = new JComboBox();
+		getContentPane().add(comboBox_1, BorderLayout.NORTH);
+		inicio = i;
+		videojuegos.clear();
+		VideojuegoService videojuegoservice = new VideojuegoService();
+		videojuegos = videojuegoservice.getAllVideojuegos(mvc.Conexion.obtener());
+		frame = new PadreJFrame();
+		frame.setTitle("Catálogo");
+		frame.setBounds(100, 100, 571, 376);
+		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		frame.getContentPane().setLayout(null);
 
-        btnDetalles = new JButton("Ver detalles");
-        btnDetalles.setBounds(337, 224, 117, 72);
-        btnDetalles.addActionListener(new BtnActionListener());
-        frame.getContentPane().add(btnDetalles);
+		btnDetalles = new JButton("Ver detalles");
+		btnDetalles.setBounds(337, 224, 117, 72);
+		btnDetalles.addActionListener(new BtnActionListener());
+		frame.getContentPane().add(btnDetalles);
 
-        panelCaratula = new JPanel((LayoutManager) null);
-        panelCaratula.setBounds(43, 52, 150, 192);
-        frame.getContentPane().add(panelCaratula);
-        panelCaratula.setLayout(new BorderLayout());
+		panelCaratula = new JPanel((LayoutManager) null);
+		panelCaratula.setBounds(43, 52, 150, 192);
+		frame.getContentPane().add(panelCaratula);
+		panelCaratula.setLayout(new BorderLayout());
 
-        panelCaratula.add(lbl, BorderLayout.CENTER);
+		panelCaratula.add(lbl, BorderLayout.CENTER);
 
-        DefaultComboBoxModel modelo = new DefaultComboBoxModel();
+		ImageIcon img = new ImageIcon("imagenes/cuenta.png");
 
-        modelo.addAll(videojuegos);
+		btnCuenta = new JButton(img);
+		btnCuenta.setFont(new Font("Lucida Grande", Font.PLAIN, 14));
+		btnCuenta.addActionListener(new BtnActionListener());
+		btnCuenta.setBorderPainted(false);
+		btnCuenta.setFocusPainted(false);
+		btnCuenta.setBounds(515, 10, 35, 35);
+		frame.getContentPane().add(btnCuenta);
 
-        comboBox = new JComboBox(modelo);
-        comboBox.addItemListener(new ComboBoxItemListener());
-        comboBox.setBounds(246, 52, 299, 27);
-        frame.getContentPane().add(comboBox);
+		selecciona = new JLabel("Selecciona un juego:");
+		selecciona.setForeground(Color.white);
+		selecciona.setBounds(250, 30, 299, 27);
+		frame.getContentPane().add(selecciona);
 
-        frame.setLocationRelativeTo(null);
-        frame.setVisible(true);
-    }
+		DefaultComboBoxModel modelo = new DefaultComboBoxModel();
 
-    private class BtnActionListener implements ActionListener {
-        public void actionPerformed(ActionEvent e) {
-        	
-        	if(e.getSource() == btnDetalles) {
-        		try {
-        			if(Principal.this == null || comboBox.getSelectedItem() == null) {
-        				JOptionPane.showMessageDialog(null, "Selecciona un videojuego del catálogo");
-        			}
-        			else
-        				new Detalles(Principal.this);
-					
+		modelo.addAll(videojuegos);
+
+		comboBox = new JComboBox(modelo);
+		comboBox.addItemListener(new ComboBoxItemListener());
+		comboBox.setBounds(246, 55, 299, 27);
+		frame.getContentPane().add(comboBox);
+
+		frame.setLocationRelativeTo(null);
+		frame.setVisible(true);
+	}
+
+	private class BtnActionListener implements ActionListener {
+		public void actionPerformed(ActionEvent e) {
+
+			if (e.getSource() == btnDetalles) {
+				try {
+					if (Principal.this == null || comboBox.getSelectedItem() == null) {
+						JOptionPane.showMessageDialog(null, "Selecciona un videojuego del catálogo");
+					} else
+						new Detalles(Principal.this, inicio);
+
 				} catch (ClassNotFoundException | IOException | SQLException e1) {
 					// TODO Auto-generated catch block
 					e1.printStackTrace();
 				}
-        	}
-        }
-    }
+			}
 
-    private class ComboBoxItemListener implements ItemListener {
-        public void itemStateChanged(ItemEvent e) {
-            if (comboBox == e.getSource()) {
-                seleccionado = (Videojuego) comboBox.getSelectedItem();
-                lbl.setIcon(new ImageIcon(seleccionado.getImagen()));
-                panelCaratula.repaint();
-            }
-        }
-    }
-    
-    public Videojuego videojuegoSeleccionado() {
+			if (e.getSource() == btnCuenta) {
+				try {
+					new MiCuenta(inicio);
+				} catch (ClassNotFoundException e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				} catch (SQLException e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				}
+			}
+		}
+	}
+
+	private class ComboBoxItemListener implements ItemListener {
+		public void itemStateChanged(ItemEvent e) {
+			if (comboBox == e.getSource()) {
+				selecciona.setVisible(false);
+				seleccionado = (Videojuego) comboBox.getSelectedItem();
+				lbl.setIcon(new ImageIcon(seleccionado.getImagen()));
+				panelCaratula.repaint();
+			}
+		}
+	}
+
+	public Videojuego videojuegoSeleccionado() {
 		return (Videojuego) comboBox.getSelectedItem();
-    }
+	}
 }

@@ -1,6 +1,7 @@
 package mvc;
 
 import java.awt.Color;
+import java.sql.SQLException;
 import java.util.Timer;
 import java.util.TimerTask;
 
@@ -18,7 +19,7 @@ public class Intro{
 	private PadreJFrame frame = new PadreJFrame();
 
 	public Intro() {
-		
+		frame.setTitle("Bienvenido KeyGames!!!");
 		frame.getContentPane().setForeground(new Color(72, 79, 84, 255));
 		frame.setForeground(new Color(72, 79, 84, 255));
 		frame.setBounds(100, 100, 455, 416);
@@ -55,7 +56,15 @@ public class Intro{
                 if (progreso == 100) {
                     // Cuando la barra de progreso llega al 100%, cerrar el JFrame
                 	frame.dispose();
-                    Inicio i = new Inicio();
+                    try {
+						Inicio i = new Inicio();
+					} catch (ClassNotFoundException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					} catch (SQLException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					}
                     cancel(); // Detener el temporizador
                 }
             }

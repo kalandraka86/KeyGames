@@ -20,8 +20,8 @@ import javax.swing.JTextField;
 import examples.PadreJFrame;
 import java.awt.Color;
 
-public class Registro extends JFrame {
-
+public class Registro extends JFrame{
+	
 	private JLabel lblUsername;
 	private JTextField textUsername;
 	private JLabel lblPsw;
@@ -35,6 +35,7 @@ public class Registro extends JFrame {
 	private PadreJFrame frame = new PadreJFrame();
 	private JButton btnRegistro;
 	private JButton btnVolver;
+	private JButton btnCuenta;
 	private final UsuarioService services = new UsuarioService();
 
 	public Registro() {
@@ -113,7 +114,8 @@ public class Registro extends JFrame {
 		btnVolver.addActionListener(new BtnActionListener());
 		btnVolver.setBounds(309, 301, 117, 29);
 		frame.getContentPane().add(btnVolver);
-
+		
+		
 		ImageIcon logo = new ImageIcon("imagenes/logo.png");
 		Image image = logo.getImage();
 		Image newImage = image.getScaledInstance(169, 132, Image.SCALE_SMOOTH);
