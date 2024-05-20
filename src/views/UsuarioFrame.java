@@ -15,6 +15,7 @@ import javax.swing.JTable;
 import javax.swing.border.EmptyBorder;
 import javax.swing.table.DefaultTableModel;
 
+import mvc.Registro;
 import mvc.Usuario;
 import mvc.UsuarioService;
 import java.awt.Font;
@@ -72,10 +73,14 @@ public class UsuarioFrame extends JFrame {
 		eliminar.setFont(new Font("Tahoma", Font.PLAIN, 20));
 		editar = new JButton ("Editar");
 		editar.setFont(new Font("Tahoma", Font.PLAIN, 20));
+		insertar = new JButton("Insertar");
+		insertar.addActionListener(new InsertarActionListener());
+		insertar.setFont(new Font("Tahoma",Font.PLAIN,20));
 		
 		panelInferior.add(volver);
 		panelInferior.add(eliminar);
 		panelInferior.add(editar);
+		panelInferior.add(insertar);
 		setVisible(true);
 	}
 
@@ -107,6 +112,12 @@ public class UsuarioFrame extends JFrame {
 		public void actionPerformed(ActionEvent e) {
 			new ListVideojuegos().setVisible(true);
 			dispose();
+		}
+	}
+	private class InsertarActionListener implements ActionListener {
+		public void actionPerformed(ActionEvent e) {
+			dispose();
+			new Insertar().setVisible(true);
 		}
 	}
 }
