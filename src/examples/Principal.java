@@ -67,10 +67,14 @@ public class Principal extends JFrame {
 
 		panelCaratula.add(lbl, BorderLayout.CENTER);
 
-		btnCuenta = new JButton("Mi Cuenta");
+		ImageIcon img = new ImageIcon("imagenes/cuenta.png");
+
+		btnCuenta = new JButton(img);
 		btnCuenta.setFont(new Font("Lucida Grande", Font.PLAIN, 14));
 		btnCuenta.addActionListener(new BtnActionListener());
-		btnCuenta.setBounds(425, 13, 117, 29);
+		btnCuenta.setBorderPainted(false);
+		btnCuenta.setFocusPainted(false);
+		btnCuenta.setBounds(515, 10, 35, 35);
 		frame.getContentPane().add(btnCuenta);
 
 		selecciona = new JLabel("Selecciona un juego:");

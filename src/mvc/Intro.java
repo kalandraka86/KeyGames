@@ -19,7 +19,7 @@ public class Intro{
 	private PadreJFrame frame = new PadreJFrame();
 
 	public Intro() {
-		
+		frame.setTitle("Bienvenido KeyGames!!!");
 		frame.getContentPane().setForeground(new Color(72, 79, 84, 255));
 		frame.setForeground(new Color(72, 79, 84, 255));
 		frame.setBounds(100, 100, 455, 416);

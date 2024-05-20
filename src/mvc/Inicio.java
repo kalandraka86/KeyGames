@@ -99,6 +99,7 @@ public class Inicio extends JFrame {
 				try {
 					if (service.validarUsuario(conex.obtener(), nameText.getText(), passText.getText())) {
 						JOptionPane.showMessageDialog(null, "Loggeo con éxito!!!","LOGEANDO",JOptionPane.INFORMATION_MESSAGE);
+						dispose();
 						new Principal(Inicio.this);
 					}
 					else
@@ -114,6 +115,7 @@ public class Inicio extends JFrame {
 			}
 
 			if (e.getSource() == btnRegistrar) {
+				dispose();
 				new Registro();
 			}
 		}
