@@ -161,8 +161,8 @@ public class Insertar extends JFrame {
 
 				if (relleno) {
 
-					List<Usuario> usuarios = userService.getAllUsuarios(conexion); // Obtener todos los usuarios existentes
-					int codigo = usuarios.stream().mapToInt(Usuario::getCodigo).max().orElse(0) + 1; // Obtener nuevo código
+					List<Usuario> usuarios = userService.getAllUsuarios(conexion);
+					int codigo = usuarios.stream().mapToInt(Usuario::getCodigo).max().orElse(0) + 1;
 
 					String rol = "Usuario";
 
