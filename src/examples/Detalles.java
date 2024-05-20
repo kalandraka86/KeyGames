@@ -15,6 +15,7 @@ import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 
+import mvc.Inicio;
 import mvc.Videojuego;
 
 public class Detalles {
@@ -39,9 +40,12 @@ public class Detalles {
 	private PadreJFrame frame = new PadreJFrame();
 	private static Videojuego videojuego = null;
 	private JLabel lbl;
+	private Inicio inicio = new Inicio();
 
-	public Detalles(Principal p) throws IOException, ClassNotFoundException, SQLException {
+	public Detalles(Principal p, Inicio i) throws IOException, ClassNotFoundException, SQLException {
 		videojuego = p.videojuegoSeleccionado();
+		inicio = i;
+		System.out.println(inicio.usuarioSeleccionado());
 
 		panelRellenar = new JPanel();
 		frame.getContentPane().add(panelRellenar, BorderLayout.CENTER);
@@ -195,7 +199,15 @@ public class Detalles {
 				frame.dispose();
 			}
 			if (e.getSource() == btnValoracion) {
-				new ValoracionFrame(videojuego);
+				try {
+					new ValoracionFrame(videojuego,inicio);
+				} catch (ClassNotFoundException e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				} catch (SQLException e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				}
 			}
 			if(e.getSource() == btnDescripcion) {
 				JOptionPane.showMessageDialog(null, videojuego.getDescripcion(),videojuego.getNombre(),JOptionPane.INFORMATION_MESSAGE);

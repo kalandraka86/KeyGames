@@ -21,6 +21,7 @@ import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 
+import mvc.Inicio;
 import mvc.Videojuego;
 import mvc.VideojuegoService;
 
@@ -33,30 +34,12 @@ public class Principal {
     private List<Videojuego> videojuegos = new ArrayList<>();
     private JLabel lbl = new JLabel();
     public Videojuego seleccionado = new Videojuego();
+    private Inicio inicio = new Inicio();
 
-    /**
-     * Launch the application.
-     */
-    public static void main(String[] args) {
-        EventQueue.invokeLater(new Runnable() {
-            public void run() {
-                try {
-                    Principal window = new Principal();
-                    window.frame.setVisible(true);
-                } catch (Exception e) {
-                    e.printStackTrace();
-                }
-            }
-        });
-    }
 
-    /**
-     * Create the application.
-     * 
-     * @throws SQLException
-     * @throws ClassNotFoundException
-     */
-    public Principal() throws ClassNotFoundException, SQLException {
+    public Principal(Inicio i) throws ClassNotFoundException, SQLException {
+    	inicio = i;
+    	System.out.println(inicio.usuarioSeleccionado());
         videojuegos.clear();
         VideojuegoService videojuegoservice = new VideojuegoService();
         videojuegos = videojuegoservice.getAllVideojuegos(mvc.Conexion.obtener());
@@ -100,7 +83,7 @@ public class Principal {
         				JOptionPane.showMessageDialog(null, "Selecciona un videojuego del catálogo");
         			}
         			else
-        				new Detalles(Principal.this);
+        				new Detalles(Principal.this,inicio);
 					
 				} catch (ClassNotFoundException | IOException | SQLException e1) {
 					// TODO Auto-generated catch block

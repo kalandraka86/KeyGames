@@ -1,6 +1,7 @@
 package mvc;
 
 import java.awt.Color;
+import java.sql.SQLException;
 import java.util.Timer;
 import java.util.TimerTask;
 
@@ -55,7 +56,15 @@ public class Intro{
                 if (progreso == 100) {
                     // Cuando la barra de progreso llega al 100%, cerrar el JFrame
                 	frame.dispose();
-                    Inicio i = new Inicio();
+                    try {
+						Inicio i = new Inicio();
+					} catch (ClassNotFoundException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					} catch (SQLException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					}
                     cancel(); // Detener el temporizador
                 }
             }

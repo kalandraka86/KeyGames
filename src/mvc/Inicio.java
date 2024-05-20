@@ -4,11 +4,8 @@ import java.awt.Color;
 import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.io.File;
+import java.sql.SQLException;
 
-import javax.sound.sampled.AudioInputStream;
-import javax.sound.sampled.AudioSystem;
-import javax.sound.sampled.Clip;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JFrame;
@@ -17,6 +14,8 @@ import javax.swing.JOptionPane;
 import javax.swing.JPasswordField;
 import javax.swing.JTextField;
 import javax.swing.SwingConstants;
+
+import examples.Principal;
 
 public class Inicio extends JFrame {
 
@@ -27,17 +26,11 @@ public class Inicio extends JFrame {
 	private JPasswordField passText;
 	private JButton btnSalir;
 	private JButton btnRegistrar;
+	private UsuarioService service = new UsuarioService();
+	private Conexion conex = new Conexion();
 
-	public Inicio() {
+	public Inicio() throws ClassNotFoundException, SQLException {
 		super("LOG IN");
-		initialize();
-	}
-
-	public static void main(String[] args) {
-		new Inicio();
-	}
-
-	private void initialize() {
 		setBounds(100, 100, 450, 300);
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		getContentPane().setLayout(null);
@@ -77,7 +70,7 @@ public class Inicio extends JFrame {
 		passText.setBounds(155, 124, 145, 26);
 		getContentPane().add(passText);
 
-		ImageIcon img = new ImageIcon("files/salir.png");
+		ImageIcon img = new ImageIcon("imagenes/salir.png");
 
 		btnSalir = new JButton(img);
 		btnSalir.setBounds(41, 174, 50, 50);
@@ -91,10 +84,11 @@ public class Inicio extends JFrame {
 		btnRegistrar.addActionListener(new btnActionListener());
 		btnRegistrar.setBounds(339, 16, 94, 29);
 		getContentPane().add(btnRegistrar);
+		
 		setResizable(false);
-		setVisible(true);
-	}
+		setVisible(true);	}
 
+	
 	private class btnActionListener implements ActionListener {
 		public void actionPerformed(ActionEvent e) {
 			if (e.getSource() == btnSalir) {
@@ -102,6 +96,17 @@ public class Inicio extends JFrame {
 				System.exit(0);
 			}
 			if (e.getSource() == btnConectar) {
+				try {
+					if(service.validarUsuario(conex.obtener(),nameText.getText(),passText.getText())) {
+						System.out.println(usuarioSeleccionado());
+						new Principal(Inicio.this);
+					}
+				} catch (ClassNotFoundException e1) {
+					JOptionPane.showMessageDialog(null, "Este usuario no está en la base de datos");
+				} catch (SQLException e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				}
 				
 			}
 
@@ -109,5 +114,11 @@ public class Inicio extends JFrame {
 				new Registro();
 			}
 		}
+	}
+	
+	// Método que devuelve el códigod de usuario
+	
+	public int usuarioSeleccionado() throws ClassNotFoundException, SQLException {
+		return service.getCodigoUsuario(conex.obtener(),nameText.getText(),passText.getText());
 	}
 }

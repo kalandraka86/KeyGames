@@ -18,12 +18,13 @@ import javax.swing.JTextArea;
 
 import mvc.CompraService;
 import mvc.Conexion;
+import mvc.Inicio;
 import mvc.Usuario;
 import mvc.Valoracion;
 import mvc.ValoracionService;
 import mvc.Videojuego;
 
-public class ValoracionFrame extends JFrame{
+public class ValoracionFrame extends JFrame {
 
 	private PadreJFrame frame = new PadreJFrame();
 	private JLabel lblTitulo;
@@ -35,10 +36,14 @@ public class ValoracionFrame extends JFrame{
 	private int rating;
 	private final ValoracionService services = new ValoracionService();
 	private Videojuego videojuego;
+	private Inicio inicio;
+//	System.out.println(inicio.usuarioSeleccionado());
 
 
-	public ValoracionFrame(Videojuego videojuego) {
+	public ValoracionFrame(Videojuego videojuego, Inicio i) throws ClassNotFoundException, SQLException {
 		this.videojuego = videojuego;
+		inicio = i;
+		System.out.println(i.usuarioSeleccionado());
 		frame.setTitle("Valoración");
 		frame.setBounds(100, 100, 515, 339);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -121,28 +126,29 @@ public class ValoracionFrame extends JFrame{
 			Valoracion val = new Valoracion();
 			String comentario = textArea.getText();
 			lblNewLabel.getText().split(" ");
-			String [] partes = lblNewLabel.getText().split(" ");
-			int nota = Integer.parseInt(partes[1]);;
+			String[] partes = lblNewLabel.getText().split(" ");
+			int nota = Integer.parseInt(partes[1]);
+			;
 			if (comentario.equalsIgnoreCase("")) {
-				JOptionPane.showMessageDialog(this,
-						"Por favor introduzca un comentario válido"); 
+				JOptionPane.showMessageDialog(this, "Por favor introduzca un comentario válido");
 			} else {
 				relleno = true;
 			}
 
 			if (relleno) {
 
-				List<Valoracion> valoraciones = services.getAllValoraciones(conexion); 
-				int codigoUsuario = 2;
+				List<Valoracion> valoraciones = services.getAllValoraciones(conexion);
+				int codigoUsuario = inicio.usuarioSeleccionado();
 				int codigoVideojuego = videojuego.getCodigo();
-				//hay que obtener codigo de usuario
+				// hay que obtener codigo de usuario
 
-				val = new Valoracion(codigoUsuario, codigoVideojuego, nota, comentario);
+				val = new Valoracion(codigoVideojuego,codigoUsuario, nota, comentario);
 				valoraciones.add(val);
 
 				services.saveValoracion(conexion, val);
 
-				JOptionPane.showMessageDialog(this, "Valoración enviada correctamente","Valoración de"+lblTitulo.getText(),JOptionPane.INFORMATION_MESSAGE);
+				JOptionPane.showMessageDialog(this, "Valoración enviada correctamente",
+						"Valoración de" + lblTitulo.getText(), JOptionPane.INFORMATION_MESSAGE);
 				textArea.setText("");
 			}
 		} catch (SQLException ex) {
