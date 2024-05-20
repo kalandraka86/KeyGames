@@ -106,5 +106,30 @@ public class UsuarioService {
 		}
 		return codigoUsuario;
 	}
-
+	
+	public Usuario getUsuario(Connection conexion, String username, String password) throws SQLException {
+        Usuario usuario = null;
+        try {
+            PreparedStatement consulta = conexion.prepareStatement(
+                "SELECT Codigo, Username, Password, Direccion, Correo, Rol, Telefono FROM " + this.tabla + " WHERE Username = ? AND Password = ?"
+            );
+            consulta.setString(1, username);
+            consulta.setString(2, password);
+            ResultSet resultado = consulta.executeQuery();
+            if (resultado.next()) {
+                usuario = new Usuario(
+                    resultado.getInt("Codigo"),
+                    resultado.getString("Username"),
+                    resultado.getString("Password"),
+                    resultado.getString("Direccion"),
+                    resultado.getString("Correo"),
+                    resultado.getString("Rol"),
+                    resultado.getInt("Telefono")
+                );
+            }
+        } catch (SQLException ex) {
+            throw new SQLException(ex);
+        }
+        return usuario;
+    }
 }

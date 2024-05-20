@@ -45,7 +45,6 @@ public class Detalles {
 	public Detalles(Principal p, Inicio i) throws IOException, ClassNotFoundException, SQLException {
 		videojuego = p.videojuegoSeleccionado();
 		inicio = i;
-		System.out.println(inicio.usuarioSeleccionado());
 
 		panelRellenar = new JPanel();
 		frame.getContentPane().add(panelRellenar, BorderLayout.CENTER);

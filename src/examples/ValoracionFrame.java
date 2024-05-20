@@ -43,7 +43,6 @@ public class ValoracionFrame extends JFrame {
 	public ValoracionFrame(Videojuego videojuego, Inicio i) throws ClassNotFoundException, SQLException {
 		this.videojuego = videojuego;
 		inicio = i;
-		System.out.println(i.usuarioSeleccionado());
 		frame.setTitle("Valoración");
 		frame.setBounds(100, 100, 515, 339);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -77,6 +76,7 @@ public class ValoracionFrame extends JFrame {
 		estrellas.setLayout(null);
 
 		lblNewLabel = new JLabel("Valoración: 1");
+		lblNewLabel.setForeground(Color.white);
 		lblNewLabel.setFont(new Font("Lucida Grande", Font.PLAIN, 18));
 		lblNewLabel.setBounds(339, 211, 137, 76);
 		frame.getContentPane().add(lblNewLabel);
@@ -138,7 +138,7 @@ public class ValoracionFrame extends JFrame {
 			if (relleno) {
 
 				List<Valoracion> valoraciones = services.getAllValoraciones(conexion);
-				int codigoUsuario = inicio.usuarioSeleccionado();
+				int codigoUsuario = inicio.codUsuario();
 				int codigoVideojuego = videojuego.getCodigo();
 				// hay que obtener codigo de usuario
 
@@ -148,7 +148,7 @@ public class ValoracionFrame extends JFrame {
 				services.saveValoracion(conexion, val);
 
 				JOptionPane.showMessageDialog(this, "Valoración enviada correctamente",
-						"Valoración de" + lblTitulo.getText(), JOptionPane.INFORMATION_MESSAGE);
+						"Valoración de " + lblTitulo.getText(), JOptionPane.INFORMATION_MESSAGE);
 				textArea.setText("");
 			}
 		} catch (SQLException ex) {

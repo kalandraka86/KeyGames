@@ -84,11 +84,11 @@ public class Inicio extends JFrame {
 		btnRegistrar.addActionListener(new btnActionListener());
 		btnRegistrar.setBounds(339, 16, 94, 29);
 		getContentPane().add(btnRegistrar);
-		
-		setResizable(false);
-		setVisible(true);	}
 
-	
+		setResizable(false);
+		setVisible(true);
+	}
+
 	private class btnActionListener implements ActionListener {
 		public void actionPerformed(ActionEvent e) {
 			if (e.getSource() == btnSalir) {
@@ -97,8 +97,7 @@ public class Inicio extends JFrame {
 			}
 			if (e.getSource() == btnConectar) {
 				try {
-					if(service.validarUsuario(conex.obtener(),nameText.getText(),passText.getText())) {
-						System.out.println(usuarioSeleccionado());
+					if (service.validarUsuario(conex.obtener(), nameText.getText(), passText.getText())) {
 						new Principal(Inicio.this);
 					}
 				} catch (ClassNotFoundException e1) {
@@ -107,7 +106,7 @@ public class Inicio extends JFrame {
 					// TODO Auto-generated catch block
 					e1.printStackTrace();
 				}
-				
+
 			}
 
 			if (e.getSource() == btnRegistrar) {
@@ -115,10 +114,14 @@ public class Inicio extends JFrame {
 			}
 		}
 	}
-	
+
 	// Método que devuelve el códigod de usuario
-	
-	public int usuarioSeleccionado() throws ClassNotFoundException, SQLException {
-		return service.getCodigoUsuario(conex.obtener(),nameText.getText(),passText.getText());
+
+	public int codUsuario() throws ClassNotFoundException, SQLException {
+		return service.getCodigoUsuario(conex.obtener(), nameText.getText(), passText.getText());
+	}
+
+	public Usuario seleccionadoUsuario() throws ClassNotFoundException, SQLException {
+		return service.getUsuario(conex.obtener(), nameText.getText(), passText.getText());
 	}
 }
