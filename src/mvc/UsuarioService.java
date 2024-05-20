@@ -26,6 +26,25 @@ public class UsuarioService {
 			throw new SQLException(ex);
 		}
 	}
+	
+	public void updateUsuario(Connection conexion, Usuario usuario) throws SQLException {
+	    try {
+	        PreparedStatement consulta;
+	        consulta = conexion.prepareStatement("UPDATE " + this.tabla
+	                + " SET Username = ?, Password = ?, Direccion = ?, Correo = ?, Rol = ?, Telefono = ? WHERE UsuarioID = ?");
+	        consulta.setString(1, usuario.getUsername());
+	        consulta.setString(2, usuario.getPassword());
+	        consulta.setString(3, usuario.getDireccion());
+	        consulta.setString(4, usuario.getCorreo());
+	        consulta.setString(5, usuario.getRol());
+	        consulta.setInt(6, usuario.getTelefono());
+	        consulta.setInt(7, usuario.getCodigo());
+	        consulta.executeUpdate();
+	    } catch (SQLException ex) {
+	        throw new SQLException(ex);
+	    }
+	}
+
 
 	public Usuario getUsuario(Connection conexion, int Codigo) throws SQLException {
 		Usuario usuario = null;
