@@ -98,10 +98,14 @@ public class Inicio extends JFrame {
 			if (e.getSource() == btnConectar) {
 				try {
 					if (service.validarUsuario(conex.obtener(), nameText.getText(), passText.getText())) {
+						JOptionPane.showMessageDialog(null, "Loggeo con éxito!!!","LOGEANDO",JOptionPane.INFORMATION_MESSAGE);
 						new Principal(Inicio.this);
 					}
+					else
+						JOptionPane.showMessageDialog(null, "Este usuario no está en la base de datos","ERROR",JOptionPane.ERROR_MESSAGE);
+
 				} catch (ClassNotFoundException e1) {
-					JOptionPane.showMessageDialog(null, "Este usuario no está en la base de datos");
+					JOptionPane.showMessageDialog(null, "Este usuario no está en la base de datos","ERROR",JOptionPane.ERROR_MESSAGE);
 				} catch (SQLException e1) {
 					// TODO Auto-generated catch block
 					e1.printStackTrace();

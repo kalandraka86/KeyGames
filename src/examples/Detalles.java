@@ -10,6 +10,7 @@ import java.sql.SQLException;
 
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
+import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
@@ -18,7 +19,7 @@ import javax.swing.JTextField;
 import mvc.Inicio;
 import mvc.Videojuego;
 
-public class Detalles {
+public class Detalles extends JFrame{
 
 	private JPanel panelRellenar;
 	private JPanel panelBotones;
@@ -196,6 +197,7 @@ public class Detalles {
 
 			if (e.getSource() == btnVolver) {
 				frame.dispose();
+				dispose();
 			}
 			if (e.getSource() == btnValoracion) {
 				try {
