@@ -56,20 +56,22 @@ public class CompraService {
 	}
 	
 	public List<Compra> getAllCompras(Connection conexion) throws SQLException {
-		List<Compra> compras = new ArrayList<>();
-		try {
-			PreparedStatement consulta = conexion.prepareStatement("SELECT Codigo, Usuario, Videojuego, Unidades " + " FROM " + this.tabla);
-			ResultSet resultado = consulta.executeQuery();
-			while(resultado.next()) {
-				compras.add(new Compra(
-						resultado.getInt("Usuario"),
-						resultado.getInt("Videojuego"),
-						resultado.getDate("Fecha_compra"),
-						resultado.getInt("Unidades")));
-			}
-		} catch(SQLException ex) {
-			throw new SQLException(ex);
-		}
-		return compras;
+		 List<Compra> compras = new ArrayList<>();
+	        String query = "SELECT Codigo_usuario, Codigo_videojuego, Fecha_compra, Unidades FROM " + this.tabla;
+
+	        try (PreparedStatement consulta = conexion.prepareStatement(query)) {
+	            ResultSet resultado = consulta.executeQuery();
+	            while (resultado.next()) {
+	                compras.add(new Compra(
+	                    resultado.getInt("CodUsuario"),
+	                    resultado.getInt("CodVideojuego"),
+	                    resultado.getDate("Fecha_compra"),
+	                    resultado.getInt("Unidades")
+	                ));
+	            }
+	        } catch (SQLException ex) {
+	            throw new SQLException(ex);
+	        }
+	        return compras;
 	}
 }

@@ -1,7 +1,6 @@
 package views;
 
 import java.awt.BorderLayout;
-import java.awt.EventQueue;
 import java.awt.FlowLayout;
 import java.sql.SQLException;
 import java.util.ArrayList;
@@ -20,6 +19,8 @@ import mvc.Usuario;
 import mvc.UsuarioService;
 import java.awt.Font;
 import java.awt.event.ActionListener;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
 import java.awt.event.ActionEvent;
 
 public class UsuarioFrame extends JFrame {
@@ -36,8 +37,17 @@ public class UsuarioFrame extends JFrame {
 
 	public UsuarioFrame() {
 		super("Lista de usuarios");
+		addWindowListener(new WindowAdapter() {
+            @Override
+            public void windowClosing(WindowEvent e) {
+                new ListVideojuegos().setVisible(true);;
+                dispose(); // Cierra la ventana actual
+            }
+        });
+		
 		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		setBounds(100, 100, 761, 431);
+		setLocationRelativeTo(null);
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 
@@ -56,13 +66,15 @@ public class UsuarioFrame extends JFrame {
 		contentPane.add(panelInferior, BorderLayout.SOUTH);
 		
 		volver = new JButton ("Volver");
-		insertar = new JButton ("Insertar");
+		volver.addActionListener(new VolverActionListener());
+		volver.setFont(new Font("Tahoma", Font.PLAIN, 20));
 		eliminar = new JButton ("Eliminar");
+		eliminar.setFont(new Font("Tahoma", Font.PLAIN, 20));
 		editar = new JButton ("Editar");
+		editar.setFont(new Font("Tahoma", Font.PLAIN, 20));
 		
 		panelInferior.add(volver);
 		panelInferior.add(eliminar);
-		panelInferior.add(insertar);
 		panelInferior.add(editar);
 		setVisible(true);
 	}
@@ -90,20 +102,11 @@ public class UsuarioFrame extends JFrame {
 		}
 
 	}
-	
-	public static void main(String[] args) {
-		EventQueue.invokeLater(new Runnable() {
-			public void run() {
-				try {
-					UsuarioFrame frame = new UsuarioFrame();
-					frame.setVisible(true);
-				} catch (Exception e) {
-					e.printStackTrace();
-				}
-			}
-		});
+
+	private class VolverActionListener implements ActionListener {
+		public void actionPerformed(ActionEvent e) {
+			new ListVideojuegos().setVisible(true);
+			dispose();
+		}
 	}
-
 }
-
-
