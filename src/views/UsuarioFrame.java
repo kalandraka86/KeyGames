@@ -56,13 +56,11 @@ public class UsuarioFrame extends JFrame {
 		contentPane.add(panelInferior, BorderLayout.SOUTH);
 		
 		volver = new JButton ("Volver");
-		insertar = new JButton ("Insertar");
 		eliminar = new JButton ("Eliminar");
 		editar = new JButton ("Editar");
 		
 		panelInferior.add(volver);
 		panelInferior.add(eliminar);
-		panelInferior.add(insertar);
 		panelInferior.add(editar);
 		setVisible(true);
 	}
