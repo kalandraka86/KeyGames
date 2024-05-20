@@ -133,7 +133,12 @@ public class ListVideojuegos extends JFrame {
 		public void actionPerformed(ActionEvent e) {
 		
 			dispose();
-			new FrameEstadisticas().setVisible(true);
+			try {
+				new FrameEstadisticas().setVisible(true);
+			} catch (ClassNotFoundException e1) {
+				// TODO Auto-generated catch block
+				e1.printStackTrace();
+			}
 		}
 	}
 }

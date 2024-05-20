@@ -5,6 +5,13 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
+import java.sql.Connection;
+import java.sql.SQLException;
+import java.util.Calendar;
+import java.util.Date;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 import javax.swing.JButton;
 import javax.swing.JFrame;
@@ -16,24 +23,32 @@ import org.jfree.chart.JFreeChart;
 import org.jfree.chart.plot.PlotOrientation;
 import org.jfree.data.category.DefaultCategoryDataset;
 
+import mvc.Compra;
+import mvc.CompraService;
+
 public class FrameEstadisticas extends JFrame {
 
     private static final long serialVersionUID = 1L;
+    private List<Compra> compras;
 
     /**
      * Create the frame.
+     * @throws ClassNotFoundException 
      */
-    public FrameEstadisticas() {
+    public FrameEstadisticas() throws ClassNotFoundException {
         super("Estadísticas");
 
+        // Rellenar la lista de compras desde la base de datos
+        rellenarListaCompras();
+
         // Crear el dataset
-        DefaultCategoryDataset dataset = createDataset();
+        DefaultCategoryDataset dataset = createDataset(compras);
 
         // Crear el gráfico
         JFreeChart chart = ChartFactory.createLineChart(
-                "Gráfico de Líneas Ejemplo", // Título del gráfico
-                "Categoría", // Etiqueta de categoría (eje X)
-                "Valor", // Etiqueta de valor (eje Y)
+                "Gráfico de Líneas sobre Las Compras", // Título del gráfico
+                "Año", // Etiqueta de categoría (eje X)
+                "Unidades", // Etiqueta de valor (eje Y)
                 dataset, // Dataset
                 PlotOrientation.VERTICAL,
                 true, // Incluir leyenda
@@ -50,7 +65,6 @@ public class FrameEstadisticas extends JFrame {
         JButton btnVolver = new JButton("Volver");
         btnVolver.addActionListener(new BtnVolverActionListener());
 
-
         // Añadir el botón al panel
         buttonPanel.add(btnVolver);
 
@@ -64,7 +78,7 @@ public class FrameEstadisticas extends JFrame {
         addWindowListener(new WindowAdapter() {
             @Override
             public void windowClosing(WindowEvent e) {
-                new ListVideojuegos().setVisible(true);;
+                new ListVideojuegos().setVisible(true);
                 dispose(); // Cierra la ventana actual
             }
         });
@@ -76,35 +90,72 @@ public class FrameEstadisticas extends JFrame {
         setLocationRelativeTo(null); // Centrar la ventana
     }
 
-    private DefaultCategoryDataset createDataset() {
+    private void rellenarListaCompras() throws ClassNotFoundException {
+        
+    	 try {
+             // Establecer conexión a la base de datos (aquí asumiendo que tienes algún método para hacerlo)
+             Connection conexion = mvc.Conexion.obtener();
+
+             // Crear instancia de CompraService
+             CompraService compraService = new CompraService();
+
+             // Obtener todas las compras de la base de datos
+             compras = compraService.getAllCompras(conexion);
+
+             // Cerrar la conexión a la base de datos
+             conexion.close();
+         } catch (SQLException ex) {
+             // Manejar cualquier excepción SQL que pueda ocurrir
+             ex.printStackTrace();
+         }
+    }
+
+    private DefaultCategoryDataset createDataset(List<Compra> compras) {
         DefaultCategoryDataset dataset = new DefaultCategoryDataset();
 
-        // Añadir valores al dataset
-        dataset.addValue(1, "Serie 1", "2016");
-        dataset.addValue(4, "Serie 1", "2017");
-        dataset.addValue(3, "Serie 1", "2018");
-        dataset.addValue(5, "Serie 1", "2019");
+        // Mapa para almacenar las sumas de unidades compradas por usuario y año
+        Map<Integer, Map<Integer, Integer>> dataMap = new HashMap<>();
 
-        dataset.addValue(5, "Serie 2", "2016");
-        dataset.addValue(7, "Serie 2", "2017");
-        dataset.addValue(6, "Serie 2", "2018");
-        dataset.addValue(8, "Serie 2", "2019");
+        // Calcular las sumas de unidades compradas por usuario y año
+        for (Compra compra : compras) {
+            int codUsuario = compra.getCodUsuario();
+            int year = getYear(compra.getFechaCompra());
+            int unidades = compra.getUnidades();
 
-        dataset.addValue(4, "Serie 3", "2016");
-        dataset.addValue(3, "Serie 3", "2017");
-        dataset.addValue(2, "Serie 3", "2018");
-        dataset.addValue(3, "Serie 3", "2019");
+            if (!dataMap.containsKey(codUsuario)) {
+                dataMap.put(codUsuario, new HashMap<>());
+            }
+
+            Map<Integer, Integer> userMap = dataMap.get(codUsuario);
+            userMap.put(year, userMap.getOrDefault(year, 0) + unidades);
+        }
+
+        // Agregar los valores al dataset
+        for (int codUsuario : dataMap.keySet()) {
+            Map<Integer, Integer> userMap = dataMap.get(codUsuario);
+            for (int year : userMap.keySet()) {
+                dataset.addValue(userMap.get(year), "Usuario " + codUsuario, String.valueOf(year));
+            }
+        }
 
         return dataset;
     }
-	private class BtnVolverActionListener implements ActionListener {
-		public void actionPerformed(ActionEvent e) {
-			
-			dispose();
-			new ListVideojuegos().setVisible(true);
-		}
-	}
+
+    // Método para obtener el año de una fecha
+    private int getYear(Date date) {
+        Calendar calendar = Calendar.getInstance();
+        calendar.setTime(date);
+        return calendar.get(Calendar.YEAR);
+    }
+
+    private class BtnVolverActionListener implements ActionListener {
+        public void actionPerformed(ActionEvent e) {
+            dispose();
+            new ListVideojuegos().setVisible(true);
+        }
+    }
 }
+
 
 
 
