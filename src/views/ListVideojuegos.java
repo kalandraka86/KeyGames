@@ -17,8 +17,6 @@ import javax.swing.table.DefaultTableModel;
 
 import mvc.Videojuego;
 import mvc.VideojuegoService;
-
-
 import java.awt.Font;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
@@ -58,6 +56,7 @@ public class ListVideojuegos extends JFrame {
 		setTitle("Lista de VideoJuegos En Stock");
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 761, 431);
+		 setLocationRelativeTo(null);
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 
@@ -76,8 +75,10 @@ public class ListVideojuegos extends JFrame {
 		contentPane.add(panelInferior, BorderLayout.SOUTH);
 		
 		estadisticas = new JButton("Estadisticas");
+		estadisticas.addActionListener(new EstadisticasActionListener());
 		estadisticas.setFont(new Font("Tahoma", Font.PLAIN, 20));
 		pedidos = new JButton("Pedidos");
+		pedidos.addActionListener(new PedidosActionListener());
 		pedidos.setFont(new Font("Tahoma", Font.PLAIN, 20));
 		clientes = new JButton ("Clientes");
 		clientes.addActionListener(new ClientesActionListener());
@@ -114,12 +115,25 @@ public class ListVideojuegos extends JFrame {
 		}
 		
 	}
-	
 
 	private class ClientesActionListener implements ActionListener {
 		public void actionPerformed(ActionEvent e) {
 			new UsuarioFrame();
 			dispose();
+		}
+	}
+	private class PedidosActionListener implements ActionListener {
+		public void actionPerformed(ActionEvent e) {
+			dispose();
+			new ListCompra().setVisible(true);
+			
+		}
+	}
+	private class EstadisticasActionListener implements ActionListener {
+		public void actionPerformed(ActionEvent e) {
+		
+			dispose();
+			new FrameEstadisticas().setVisible(true);
 		}
 	}
 }

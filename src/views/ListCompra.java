@@ -17,6 +17,11 @@ import javax.swing.table.DefaultTableModel;
 
 import mvc.Compra;
 import mvc.CompraService;
+import mvc.VideojuegoService;
+import java.awt.event.ActionListener;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
+import java.awt.event.ActionEvent;
 
 public class ListCompra extends JFrame {
 
@@ -28,28 +33,21 @@ public class ListCompra extends JFrame {
 	private List<Compra> compras;
 
 	/**
-	 * Launch the application.
-	 */
-	public static void main(String[] args) {
-		EventQueue.invokeLater(new Runnable() {
-			public void run() {
-				try {
-					ListCompra frame = new ListCompra();
-					frame.setVisible(true);
-				} catch (Exception e) {
-					e.printStackTrace();
-				}
-			}
-		});
-	}
-
-	/**
 	 * Create the frame.
 	 */
 	public ListCompra() {
 		setTitle("Lista Compras Realizadas");
-		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		addWindowListener(new WindowAdapter() {
+            @Override
+            public void windowClosing(WindowEvent e) {
+                new ListVideojuegos().setVisible(true);;
+                dispose(); // Cierra la ventana actual
+            }
+        });
+		
+		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		setBounds(100, 100, 450, 300);
+		setLocationRelativeTo(null);
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 
@@ -68,13 +66,14 @@ public class ListCompra extends JFrame {
 		contentPane.add(panelInferior, BorderLayout.SOUTH);
 		
 		volver = new JButton ("Volver");
+		volver.addActionListener(new VolverActionListener());
 		panelInferior.add(volver);
 	}
 
-	private void showCompras() {
+	/*private void showCompras() {
 		
 		try {
-			this.compras = this.services.getAllCompras(mvc.Conexion.obtener());
+			this.compras = this.services.getAllVideojuegos(mvc.Conexion.obtener());
 			tabla.setModel(new DefaultTableModel(new Object[][] {
 
 			}, new String[] { "Cod-VideoJuego", "Cod-Usuario","Fecha-Compra", "Unidades"}));
@@ -94,6 +93,12 @@ public class ListCompra extends JFrame {
 			JOptionPane.showMessageDialog(this, "Ha surgido un error y no se han podido recuperar los datos");
 		}
 		
-	}
+	}*/
 
+	private class VolverActionListener implements ActionListener {
+		public void actionPerformed(ActionEvent e) {
+			dispose();
+			new ListVideojuegos().setVisible(true);
+		}
+	}
 }
