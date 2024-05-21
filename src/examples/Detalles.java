@@ -208,7 +208,6 @@ public class Detalles extends JFrame {
 			}
 			if (e.getSource() == btnVolver) {
 				frame.dispose();
-				dispose();
 			}
 			if (e.getSource() == btnValoracion) {
 				try {
