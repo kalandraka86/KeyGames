@@ -63,8 +63,8 @@ public class CompraService {
 	            ResultSet resultado = consulta.executeQuery();
 	            while (resultado.next()) {
 	                compras.add(new Compra(
-	                    resultado.getInt("CodUsuario"),
-	                    resultado.getInt("CodVideojuego"),
+	                    resultado.getInt("Codigo_usuario"),
+	                    resultado.getInt("Codigo_videojuego"),
 	                    resultado.getDate("Fecha_compra"),
 	                    resultado.getInt("Unidades")
 	                ));

@@ -1,121 +1,176 @@
 package mvc;
 
+import java.awt.Color;
+import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.sql.Connection;
+import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
+import javax.swing.JComboBox;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
-import javax.swing.JPanel;
 import javax.swing.JTextField;
-import javax.swing.border.EmptyBorder;
+
+import examples.PadreJFrame;
+import examples.Principal;
 
 
-public class CompraFrame extends JFrame {
+public class CompraFrame extends JFrame{
 	private static final long serialVersionUID = 1L;
-	private JPanel contentPane;
 	private JTextField textNombre;
 	private JTextField textUsuario;
-	private JTextField textUnidades;
-	private JLabel lblImagen;
 	private JLabel lblNombre;
 	private JLabel lblUsuario;
 	private JLabel lblUnidades;
-	private JLabel lblComprar;
-	private JLabel lblVolver;
-	private JButton btnComprar;
-	private JButton btnVolver;
 	private ImageIcon image;
-	private Videojuego videojuego;
-	private Usuario usuario;
 	private List<Videojuego> videojuegos = new ArrayList<>();
 	private List<Usuario> usuarios = new ArrayList<>();
-	
-	
-	public static void main(String[] args) {
-		CompraFrame frame = new CompraFrame();
-	}
+	private PadreJFrame frame = new PadreJFrame();
+	private JButton btnComprar;
+	private JButton btnVolver;
+	private JLabel lbl;
+	private static Videojuego videojuego = null;
+	private Inicio inicio;
+	private Principal principal;
+	private Usuario usuario;
+	private JComboBox cantidadcomboBox;
+	private Date utilDate = new Date();
+	private java.sql.Date fechaHoy = new java.sql.Date(utilDate.getDate());
+	private final CompraService services = new CompraService();
+
 
 	
-	public CompraFrame() {
-		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setBounds(100, 100, 637, 496);
-		contentPane = new JPanel();
-		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
+	
+	public CompraFrame(Principal p, Inicio i) throws ClassNotFoundException, SQLException {
+		videojuego = p.videojuegoSeleccionado();
+		principal = p;
+		inicio = i;
+		usuario = i.seleccionadoUsuario();
+		frame.setTitle("Compra de "+videojuego.getNombre());
+		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		frame.setBounds(100, 100, 639, 505);		
+		frame.getContentPane().setLayout(null);
 		
-		ManejadorEventos manejador = new ManejadorEventos();
-
-		setContentPane(contentPane);
-		contentPane.setLayout(null);
+		lblNombre = new JLabel("Título");
+		lblNombre.setForeground(new Color(254, 255, 255));
+		lblNombre.setFont(new Font("Lucida Grande", Font.PLAIN, 18));
+		lblNombre.setBounds(64, 246, 140, 22);
+		frame.getContentPane().add(lblNombre);
 		
-		lblImagen = new JLabel();
-		lblImagen.setBounds(208, 24, 184, 172);
-		contentPane.add(lblImagen);
+		JLabel lblUsuario = new JLabel("Usuario");
+		lblUsuario.setForeground(new Color(254, 255, 255));
+		lblUsuario.setFont(new Font("Lucida Grande", Font.PLAIN, 18));
+		lblUsuario.setBounds(64, 291, 130, 13);
+		frame.getContentPane().add(lblUsuario);
 		
-		lblNombre = new JLabel("Nombre: ");
-		lblNombre.setBounds(59, 224, 106, 13);
-		contentPane.add(lblNombre);
-		
-		JLabel lblUsuario = new JLabel("Usuario: ");
-		lblUsuario.setBounds(59, 269, 106, 13);
-		contentPane.add(lblUsuario);
-		
-		JLabel lblUnidades = new JLabel("Unidades: ");
-		lblUnidades.setBounds(59, 317, 106, 13);
-		contentPane.add(lblUnidades);
+		JLabel lblUnidades = new JLabel("Unidades");
+		lblUnidades.setForeground(new Color(254, 255, 255));
+		lblUnidades.setFont(new Font("Lucida Grande", Font.PLAIN, 18));
+		lblUnidades.setBounds(64, 339, 130, 13);
+		frame.getContentPane().add(lblUnidades);
 		
 		textNombre = new JTextField();
-		textNombre.setBounds(226, 214, 292, 37);
-		contentPane.add(textNombre);
+		textNombre.setText(videojuego.getNombre());
+		textNombre.setEditable(false);
+		textNombre.setBounds(231, 236, 292, 37);
+		frame.getContentPane().add(textNombre);
 		textNombre.setColumns(10);
 		
 		textUsuario = new JTextField();
+		textUsuario.setText(usuario.getUsername());
+		textUsuario.setEditable(false);
 		textUsuario.setColumns(10);
-		textUsuario.setBounds(226, 255, 292, 37);
-		contentPane.add(textUsuario);
+		textUsuario.setBounds(231, 277, 292, 37);
+		frame.getContentPane().add(textUsuario);
 		
-		textUnidades = new JTextField();
-		textUnidades.setColumns(10);
-		textUnidades.setBounds(226, 302, 292, 37);
-		contentPane.add(textUnidades);
+		btnComprar = new JButton("Comprar");
+		btnComprar.setFont(new Font("Lucida Grande", Font.PLAIN, 16));
+		btnComprar.addActionListener(new btnActionListener());
+		btnComprar.setBounds(361, 399, 117, 45);
+		frame.getContentPane().add(btnComprar);
 		
-		lblComprar = new JLabel("Realice su compra: ");
-		lblComprar.setBounds(119, 369, 80, 13);
-		contentPane.add(lblComprar);
+		btnVolver = new JButton("Volver");
+		btnVolver.setFont(new Font("Lucida Grande", Font.PLAIN, 16));
+		btnVolver.addActionListener(new btnActionListener());
+		btnVolver.setBounds(149, 399, 117, 45);
+		frame.getContentPane().add(btnVolver);
 		
-		lblVolver = new JLabel("Volver: ");
-		lblVolver.setBounds(119, 400, 80, 13);
-		contentPane.add(lblVolver);
+		lbl = new JLabel(new ImageIcon(videojuego.getImagen()));
+		lbl.setBounds(247, 24, 150, 192);
+		frame.getContentPane().add(lbl);
 		
-		btnComprar = new JButton("Comprar: ");
-		btnComprar.setBounds(282, 365, 119, 21);
-		btnComprar.addActionListener(manejador);
-		contentPane.add(btnComprar);
+		String [] stock = new String[101];
 		
-		btnVolver = new JButton("Volver: ");
-		btnVolver.setBounds(282, 396, 119, 21);
-		btnVolver.addActionListener(manejador);
-		contentPane.add(btnVolver);
-		
-		this.setLocationRelativeTo(null);
-		setVisible(true);
-	}
-	
-	
-	private class ManejadorEventos implements ActionListener {
-
-		@Override
-		public void actionPerformed(ActionEvent e) {
-			// TODO Auto-generated method stub
-			if(e.getSource()==btnComprar) {
-				JOptionPane.showMessageDialog(null, "Operación realizada con éxito");
-			}
-			
+		for(int f = 1;f<stock.length;f++) {
+			stock[f] = String.valueOf(f);
 		}
 		
+		cantidadcomboBox = new JComboBox(stock);
+		cantidadcomboBox.setBounds(291, 335, 140, 27);
+		frame.getContentPane().add(cantidadcomboBox);
+		
+		frame.setLocationRelativeTo(null);
+		frame.setVisible(true);
+	}
+	
+	private class btnActionListener implements ActionListener {
+		public void actionPerformed(ActionEvent e) {
+			
+			if(e.getSource() == btnComprar) {
+				updateCompra();
+			}
+			if(e.getSource() == btnVolver) {
+				frame.dispose();
+			}
+		}
+	}
+	
+	private void updateCompra() {
+//		int codVideojuego, int codUsuario, Date fechaCompra, int unidades
+
+		try {
+			Connection conexion = Conexion.obtener();
+
+			boolean relleno = false;
+			Compra com = new Compra();
+			int unidades = cantidadcomboBox.getSelectedIndex();
+			
+			if (cantidadcomboBox.getSelectedIndex() == 0) {
+				JOptionPane.showMessageDialog(this, "Por favor introduzca una cantidad válido");
+			} else {
+				relleno = true;
+			}
+
+			if (relleno) {
+
+				List<Compra> compras = services.getAllCompras(conexion);
+				int codigoUsuario = inicio.codUsuario();
+				int codigoVideojuego = videojuego.getCodigo();
+				// hay que obtener codigo de usuario
+
+				com = new Compra(codigoVideojuego,codigoUsuario, fechaHoy, unidades);
+				compras.add(com);
+
+				services.saveCompra(conexion, com);
+
+				JOptionPane.showMessageDialog(this, "Compra realizada con éxito!!!",
+						"COMPRA EXITOSA", JOptionPane.INFORMATION_MESSAGE);
+				cantidadcomboBox.setSelectedIndex(0);
+			}
+		} catch (SQLException ex) {
+			System.out.println(ex.getMessage());
+			JOptionPane.showMessageDialog(this, "Ha surgido un error y no se ha podido realizar la compra");
+		} catch (ClassNotFoundException ex) {
+			System.out.println(ex);
+			JOptionPane.showMessageDialog(this, "Ha surgido un error y no se ha podido realizar la compra");
+		}
+
 	}
 }

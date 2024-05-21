@@ -16,6 +16,7 @@ import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 
+import mvc.CompraFrame;
 import mvc.Inicio;
 import mvc.Videojuego;
 
@@ -41,12 +42,13 @@ public class Detalles extends JFrame{
 	private PadreJFrame frame = new PadreJFrame();
 	private static Videojuego videojuego = null;
 	private JLabel lbl;
-	private Inicio inicio = new Inicio();
+	private Inicio inicio;
+	private Principal principal;
 
 	public Detalles(Principal p, Inicio i) throws IOException, ClassNotFoundException, SQLException {
 		videojuego = p.videojuegoSeleccionado();
 		inicio = i;
-
+		principal = p;
 		panelRellenar = new JPanel();
 		frame.getContentPane().add(panelRellenar, BorderLayout.CENTER);
 		panelRellenar.setLayout(null);
@@ -195,6 +197,17 @@ public class Detalles extends JFrame{
 
 		public void actionPerformed(ActionEvent e) {
 
+			if(e.getSource() == btnComprar) {
+				try {
+					new CompraFrame(principal,inicio);
+				} catch (ClassNotFoundException e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				} catch (SQLException e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				}
+			}
 			if (e.getSource() == btnVolver) {
 				frame.dispose();
 				dispose();

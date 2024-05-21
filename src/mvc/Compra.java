@@ -7,10 +7,10 @@ public class Compra {
 	
 	private int codVideojuego;
 	private int codUsuario;
-	private Date fechaCompra;
+	private java.sql.Date fechaCompra;
 	private int unidades;
 	
-	public Compra(int codVideojuego, int codUsuario, Date fechaCompra, int unidades) {
+	public Compra(int codVideojuego, int codUsuario, java.sql.Date fechaCompra, int unidades) {
 		super();
 		this.codVideojuego = codVideojuego;
 		this.codUsuario = codUsuario;
@@ -38,11 +38,11 @@ public class Compra {
 		this.codUsuario = codUsuario;
 	}
 
-	public Date getFechaCompra() {
+	public java.sql.Date getFechaCompra() {
 		return fechaCompra;
 	}
 
-	public void setFechaCompra(Date fechaCompra) {
+	public void setFechaCompra(java.sql.Date fechaCompra) {
 		this.fechaCompra = fechaCompra;
 	}
 
