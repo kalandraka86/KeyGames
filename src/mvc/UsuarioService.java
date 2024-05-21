@@ -151,4 +151,21 @@ public class UsuarioService {
         }
         return usuario;
     }
+
+	public boolean esAdmin(Connection conexion, String username) throws SQLException {
+	    boolean esAdmin = false;
+	    try {
+	        PreparedStatement consulta = conexion.prepareStatement("SELECT Rol FROM " + this.tabla + " WHERE Username = ?");
+	        consulta.setString(1, username);
+	        ResultSet resultado = consulta.executeQuery();
+	        if (resultado.next()) {
+	            String rol = resultado.getString("Rol");
+	            esAdmin = rol.equalsIgnoreCase("Administrador");
+	        }
+	    } catch (SQLException ex) {
+	        throw new SQLException(ex);
+	    }
+	    return esAdmin;
+	}
+
 }

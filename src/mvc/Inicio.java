@@ -5,7 +5,6 @@ import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.sql.SQLException;
-
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JFrame;
@@ -16,6 +15,7 @@ import javax.swing.JTextField;
 import javax.swing.SwingConstants;
 
 import examples.Principal;
+import views.ListVideojuegos;
 
 public class Inicio extends JFrame {
 
@@ -59,14 +59,14 @@ public class Inicio extends JFrame {
 
 		btnConectar = new JButton("Conectar");
 		btnConectar.setForeground(Color.black);
-		btnConectar.addActionListener(new btnActionListener());
+		btnConectar.addActionListener(new BtnActionListener());
 		btnConectar.setBounds(186, 201, 80, 29);
 		getContentPane().add(btnConectar);
 
 		passText = new JPasswordField();
 		passText.setBackground(new Color(231, 162, 83));
 		passText.setHorizontalAlignment(SwingConstants.CENTER);
-		passText.addActionListener(new btnActionListener());
+		passText.addActionListener(new BtnActionListener());
 		passText.setBounds(155, 124, 145, 26);
 		getContentPane().add(passText);
 
@@ -76,12 +76,12 @@ public class Inicio extends JFrame {
 		btnSalir.setBounds(41, 174, 50, 50);
 		btnSalir.setBorderPainted(false);
 		btnSalir.setFocusPainted(false);
-		btnSalir.addActionListener(new btnActionListener());
+		btnSalir.addActionListener(new BtnActionListener());
 		getContentPane().add(btnSalir);
 
 		btnRegistrar = new JButton("Registrarse");
 		btnRegistrar.setForeground(Color.BLACK);
-		btnRegistrar.addActionListener(new btnActionListener());
+		btnRegistrar.addActionListener(new BtnActionListener());
 		btnRegistrar.setBounds(339, 16, 94, 29);
 		getContentPane().add(btnRegistrar);
 
@@ -89,44 +89,46 @@ public class Inicio extends JFrame {
 		setVisible(true);
 	}
 
-	private class btnActionListener implements ActionListener {
-		public void actionPerformed(ActionEvent e) {
-			if (e.getSource() == btnSalir) {
-				JOptionPane.showMessageDialog(null, "Gracias por usar nuestro programa :)");
-				System.exit(0);
-			}
-			if (e.getSource() == btnConectar) {
-				try {
-					if (service.validarUsuario(conex.obtener(), nameText.getText(), passText.getText())) {
-						JOptionPane.showMessageDialog(null, "Loggeo con éxito!!!","LOGEANDO",JOptionPane.INFORMATION_MESSAGE);
-						dispose();
-						new Principal(Inicio.this);
-					}
-					else
-						JOptionPane.showMessageDialog(null, "Compruebe que están bien introducidos los datos","ERROR",JOptionPane.ERROR_MESSAGE);
+	private class BtnActionListener implements ActionListener {
+	    public void actionPerformed(ActionEvent e) {
+	        if (e.getSource() == btnSalir) {
+	            JOptionPane.showMessageDialog(null, "Gracias por usar nuestro programa :)");
+	            System.exit(0);
+	        }
+	        if (e.getSource() == btnConectar) {
+	            try {
+	                if (service.validarUsuario(conex.obtener(), nameText.getText(), new String(passText.getPassword()))) {
+	                    JOptionPane.showMessageDialog(null, "Loggeo con éxito!!!", "LOGEANDO", JOptionPane.INFORMATION_MESSAGE);
+	                    
+	                    String username = nameText.getText();
+	                    if (service.esAdmin(conex.obtener(), username)) {
+	                        new ListVideojuegos().setVisible(true); // Abre el frame de administrador
+	                    } else {
+	                        new Principal(Inicio.this).setVisible(true); // Abre el frame de usuario regular
+	                    }
+	                } else {
+	                    JOptionPane.showMessageDialog(null, "Compruebe que están bien introducidos los datos", "ERROR", JOptionPane.ERROR_MESSAGE);
+	                }
+	            } catch (ClassNotFoundException | SQLException e1) {
+	                JOptionPane.showMessageDialog(null, "Este usuario no está en la base de datos", "ERROR", JOptionPane.ERROR_MESSAGE);
+	                e1.printStackTrace();
+	            }
+	        }
 
-				} catch (ClassNotFoundException e1) {
-					JOptionPane.showMessageDialog(null, "Este usuario no está en la base de datos","ERROR",JOptionPane.ERROR_MESSAGE);
-				} catch (SQLException e1) {
-					// TODO Auto-generated catch block
-					e1.printStackTrace();
-				}
-
-			}
-
-			if (e.getSource() == btnRegistrar) {
-				new Registro();
-			}
-		}
+	        if (e.getSource() == btnRegistrar) {
+	            new Registro();
+	        }
+	    }
 	}
 
-	// Método que devuelve el códigod de usuario
 
+	// Método que devuelve el código de usuario
 	public int codUsuario() throws ClassNotFoundException, SQLException {
-		return service.getCodigoUsuario(conex.obtener(), nameText.getText(), passText.getText());
+		return service.getCodigoUsuario(conex.obtener(), nameText.getText(), new String(passText.getPassword()));
 	}
 
 	public Usuario seleccionadoUsuario() throws ClassNotFoundException, SQLException {
-		return service.getUsuario(conex.obtener(), nameText.getText(), passText.getText());
+		return service.getUsuario(conex.obtener(), nameText.getText(), new String(passText.getPassword()));
 	}
 }
+

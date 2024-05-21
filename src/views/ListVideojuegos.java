@@ -34,22 +34,6 @@ public class ListVideojuegos extends JFrame {
     private JComboBox<String> comboBoxGenero;
 
     /**
-     * Launch the application.
-     */
-    public static void main(String[] args) {
-        EventQueue.invokeLater(new Runnable() {
-            public void run() {
-                try {
-                    ListVideojuegos frame = new ListVideojuegos();
-                    frame.setVisible(true);
-                } catch (Exception e) {
-                    e.printStackTrace();
-                }
-            }
-        });
-    }
-
-    /**
      * Create the frame.
      */
     public ListVideojuegos() {
@@ -93,7 +77,6 @@ public class ListVideojuegos extends JFrame {
         comboBoxGenero = new JComboBox<String>();
         panelSuperior.add(comboBoxGenero);
 
-        // Cargar los géneros disponibles en el ComboBox
         cargarGeneros();
 
         // Al seleccionar un género, actualizar la tabla
@@ -171,7 +154,6 @@ public class ListVideojuegos extends JFrame {
 
     private class EstadisticasActionListener implements ActionListener {
         public void actionPerformed(ActionEvent e) {
-
             dispose();
             new FrameEstadisticas().setVisible(true);
         }
