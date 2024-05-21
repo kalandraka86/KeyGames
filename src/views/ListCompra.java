@@ -2,6 +2,7 @@ package views;
 
 import java.awt.BorderLayout;
 import java.awt.FlowLayout;
+import java.awt.Font;
 import java.sql.SQLException;
 import java.util.List;
 import javax.swing.JButton;
@@ -56,6 +57,7 @@ public class ListCompra extends JFrame {
         contentPane.add(panelInferior, BorderLayout.SOUTH);
 
         volver = new JButton("Volver");
+        volver.setFont(new Font("Tahoma", Font.PLAIN, 20));
         volver.addActionListener(new VolverActionListener());
         panelInferior.add(volver);
     }
