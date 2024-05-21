@@ -101,6 +101,7 @@ public class CompraFrame extends JFrame {
 		btnVolver.addActionListener(manejador);
 		contentPane.add(btnVolver);
 		
+		this.setLocationRelativeTo(null);
 		setVisible(true);
 	}
 	

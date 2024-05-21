@@ -213,6 +213,10 @@ public class Detalles extends JFrame{
 			if(e.getSource() == btnDescripcion) {
 				JOptionPane.showMessageDialog(null, videojuego.getDescripcion(),videojuego.getNombre(),JOptionPane.INFORMATION_MESSAGE);
 			}
+			if (e.getSource() == btnVolver) {
+				frame.dispose();
+				dispose();
+			}
 		}
 	}
 }
