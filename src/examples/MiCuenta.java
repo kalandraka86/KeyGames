@@ -116,6 +116,7 @@ public class MiCuenta {
 		btnVolver.setBounds(166, 256, 117, 29);
 		frame.getContentPane().add(btnVolver);
 		
+        frame.setResizable(false);
 		frame.setLocationRelativeTo(null);
 		frame.setVisible(true);
 	}

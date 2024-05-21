@@ -103,7 +103,7 @@ public class Inicio extends JFrame {
 						new Principal(Inicio.this);
 					}
 					else
-						JOptionPane.showMessageDialog(null, "Este usuario no está en la base de datos","ERROR",JOptionPane.ERROR_MESSAGE);
+						JOptionPane.showMessageDialog(null, "Compruebe que están bien introducidos los datos","ERROR",JOptionPane.ERROR_MESSAGE);
 
 				} catch (ClassNotFoundException e1) {
 					JOptionPane.showMessageDialog(null, "Este usuario no está en la base de datos","ERROR",JOptionPane.ERROR_MESSAGE);
@@ -115,7 +115,6 @@ public class Inicio extends JFrame {
 			}
 
 			if (e.getSource() == btnRegistrar) {
-				dispose();
 				new Registro();
 			}
 		}

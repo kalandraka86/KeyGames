@@ -21,8 +21,7 @@ import javax.swing.JTextField;
 import examples.PadreJFrame;
 import examples.Principal;
 
-
-public class CompraFrame extends JFrame{
+public class CompraFrame extends JFrame {
 	private static final long serialVersionUID = 1L;
 	private JTextField textNombre;
 	private JTextField textUsuario;
@@ -42,96 +41,100 @@ public class CompraFrame extends JFrame{
 	private Usuario usuario;
 	private JComboBox cantidadcomboBox;
 	private Date utilDate = new Date();
-	private java.sql.Date fechaHoy = new java.sql.Date(utilDate.getDate());
+	private java.sql.Timestamp fechaHoy = new java.sql.Timestamp(System.currentTimeMillis());
 	private final CompraService services = new CompraService();
 
-
-	
-	
 	public CompraFrame(Principal p, Inicio i) throws ClassNotFoundException, SQLException {
 		videojuego = p.videojuegoSeleccionado();
 		principal = p;
 		inicio = i;
 		usuario = i.seleccionadoUsuario();
-		frame.setTitle("Compra de "+videojuego.getNombre());
+		frame.setTitle("Compra de " + videojuego.getNombre());
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		frame.setBounds(100, 100, 639, 505);		
+		frame.setBounds(100, 100, 639, 505);
 		frame.getContentPane().setLayout(null);
-		
-		lblNombre = new JLabel("Título");
+
+		lblNombre = new JLabel("  Título");
+		lblNombre.setBackground(new Color(119, 128, 136));
+		lblNombre.setOpaque(true);
 		lblNombre.setForeground(new Color(254, 255, 255));
 		lblNombre.setFont(new Font("Lucida Grande", Font.PLAIN, 18));
-		lblNombre.setBounds(64, 246, 140, 22);
+		lblNombre.setBounds(64, 236, 130, 32);
 		frame.getContentPane().add(lblNombre);
-		
-		JLabel lblUsuario = new JLabel("Usuario");
+
+		lblUsuario = new JLabel("  Usuario");
+		lblUsuario.setBackground(new Color(119, 128, 136));
+		lblUsuario.setOpaque(true);
 		lblUsuario.setForeground(new Color(254, 255, 255));
 		lblUsuario.setFont(new Font("Lucida Grande", Font.PLAIN, 18));
-		lblUsuario.setBounds(64, 291, 130, 13);
+		lblUsuario.setBounds(64, 293, 130, 34);
 		frame.getContentPane().add(lblUsuario);
-		
-		JLabel lblUnidades = new JLabel("Unidades");
+
+		lblUnidades = new JLabel("  Unidades");
+		lblUnidades.setOpaque(true);
+		lblUnidades.setBackground(new Color(119, 128, 136));
 		lblUnidades.setForeground(new Color(254, 255, 255));
 		lblUnidades.setFont(new Font("Lucida Grande", Font.PLAIN, 18));
-		lblUnidades.setBounds(64, 339, 130, 13);
+		lblUnidades.setBounds(64, 339, 130, 32);
 		frame.getContentPane().add(lblUnidades);
-		
+
 		textNombre = new JTextField();
 		textNombre.setText(videojuego.getNombre());
 		textNombre.setEditable(false);
 		textNombre.setBounds(231, 236, 292, 37);
 		frame.getContentPane().add(textNombre);
 		textNombre.setColumns(10);
-		
+
 		textUsuario = new JTextField();
 		textUsuario.setText(usuario.getUsername());
 		textUsuario.setEditable(false);
 		textUsuario.setColumns(10);
-		textUsuario.setBounds(231, 277, 292, 37);
+		textUsuario.setBounds(231, 290, 292, 37);
 		frame.getContentPane().add(textUsuario);
-		
+
 		btnComprar = new JButton("Comprar");
 		btnComprar.setFont(new Font("Lucida Grande", Font.PLAIN, 16));
 		btnComprar.addActionListener(new btnActionListener());
 		btnComprar.setBounds(361, 399, 117, 45);
 		frame.getContentPane().add(btnComprar);
-		
+
 		btnVolver = new JButton("Volver");
 		btnVolver.setFont(new Font("Lucida Grande", Font.PLAIN, 16));
 		btnVolver.addActionListener(new btnActionListener());
 		btnVolver.setBounds(149, 399, 117, 45);
 		frame.getContentPane().add(btnVolver);
-		
+
 		lbl = new JLabel(new ImageIcon(videojuego.getImagen()));
 		lbl.setBounds(247, 24, 150, 192);
 		frame.getContentPane().add(lbl);
-		
-		String [] stock = new String[101];
-		
-		for(int f = 1;f<stock.length;f++) {
+
+		String[] stock = new String[101];
+
+		for (int f = 1; f < stock.length; f++) {
 			stock[f] = String.valueOf(f);
 		}
-		
+
 		cantidadcomboBox = new JComboBox(stock);
-		cantidadcomboBox.setBounds(291, 335, 140, 27);
+		cantidadcomboBox.setBounds(291, 345, 140, 27);
 		frame.getContentPane().add(cantidadcomboBox);
-		
+
+		frame.setResizable(false);
 		frame.setLocationRelativeTo(null);
 		frame.setVisible(true);
 	}
-	
+
 	private class btnActionListener implements ActionListener {
 		public void actionPerformed(ActionEvent e) {
-			
-			if(e.getSource() == btnComprar) {
+
+			if (e.getSource() == btnComprar) {
 				updateCompra();
 			}
-			if(e.getSource() == btnVolver) {
+			if (e.getSource() == btnVolver) {
 				frame.dispose();
 			}
 		}
 	}
-	
+
 	private void updateCompra() {
 //		int codVideojuego, int codUsuario, Date fechaCompra, int unidades
 
@@ -141,7 +144,7 @@ public class CompraFrame extends JFrame{
 			boolean relleno = false;
 			Compra com = new Compra();
 			int unidades = cantidadcomboBox.getSelectedIndex();
-			
+
 			if (cantidadcomboBox.getSelectedIndex() == 0) {
 				JOptionPane.showMessageDialog(this, "Por favor introduzca una cantidad válido");
 			} else {
@@ -155,21 +158,22 @@ public class CompraFrame extends JFrame{
 				int codigoVideojuego = videojuego.getCodigo();
 				// hay que obtener codigo de usuario
 
-				com = new Compra(codigoVideojuego,codigoUsuario, fechaHoy, unidades);
+				com = new Compra(codigoVideojuego, codigoUsuario, fechaHoy, unidades);
 				compras.add(com);
 
 				services.saveCompra(conexion, com);
+				services.nuevoStock(conexion, com, videojuego.getStock(), unidades);
 
-				JOptionPane.showMessageDialog(this, "Compra realizada con éxito!!!",
-						"COMPRA EXITOSA", JOptionPane.INFORMATION_MESSAGE);
+				JOptionPane.showMessageDialog(this, "Compra realizada con éxito!!!", "COMPRA EXITOSA",
+						JOptionPane.INFORMATION_MESSAGE);
 				cantidadcomboBox.setSelectedIndex(0);
 			}
 		} catch (SQLException ex) {
 			System.out.println(ex.getMessage());
-			JOptionPane.showMessageDialog(this, "Ha surgido un error y no se ha podido realizar la compra");
+			JOptionPane.showMessageDialog(this, "No puedes comprar el mismo videojuego 2 veces seguidas");
 		} catch (ClassNotFoundException ex) {
 			System.out.println(ex);
-			JOptionPane.showMessageDialog(this, "Ha surgido un error y no se ha podido realizar la compra");
+			JOptionPane.showMessageDialog(this, "No puedes comprar el mismo videojuego 2 veces seguidas");
 		}
 
 	}

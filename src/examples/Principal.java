@@ -91,6 +91,7 @@ public class Principal extends JFrame {
 		comboBox.setBounds(246, 55, 299, 27);
 		frame.getContentPane().add(comboBox);
 
+		frame.setResizable(false);
 		frame.setLocationRelativeTo(null);
 		frame.setVisible(true);
 	}
@@ -101,7 +102,7 @@ public class Principal extends JFrame {
 			if (e.getSource() == btnDetalles) {
 				try {
 					if (Principal.this == null || comboBox.getSelectedItem() == null) {
-						JOptionPane.showMessageDialog(null, "Selecciona un videojuego del catálogo");
+						JOptionPane.showMessageDialog(null, "Por favor, selecciona un videojuego del catálogo","ERROR",JOptionPane.ERROR_MESSAGE);
 					} else
 						new Detalles(Principal.this, inicio);
 

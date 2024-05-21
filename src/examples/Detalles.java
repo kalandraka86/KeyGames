@@ -20,7 +20,7 @@ import mvc.CompraFrame;
 import mvc.Inicio;
 import mvc.Videojuego;
 
-public class Detalles extends JFrame{
+public class Detalles extends JFrame { 
 
 	private JPanel panelRellenar;
 	private JPanel panelBotones;
@@ -53,15 +53,15 @@ public class Detalles extends JFrame{
 		frame.getContentPane().add(panelRellenar, BorderLayout.CENTER);
 		panelRellenar.setLayout(null);
 		panelRellenar.setBackground(new Color(72, 79, 84, 255));
-		
+
 		panel = new JPanel(new BorderLayout());
 		panel.setBounds(486, 67, 150, 192);
 		panelRellenar.add(panel);
-		
+
 		lbl = new JLabel(new ImageIcon(videojuego.getImagen()));
 		panel.add(lbl, BorderLayout.CENTER);
-		
-		frame.setTitle("Detalles de "+videojuego.getNombre());
+
+		frame.setTitle("Detalles de " + videojuego.getNombre());
 		frame.setBounds(100, 100, 700, 500);
 
 		lblPrecio = new JLabel("  Precio");
@@ -73,7 +73,7 @@ public class Detalles extends JFrame{
 		panelRellenar.add(lblPrecio);
 
 		textFieldPrecio = new JTextField();
-		textFieldPrecio.setText(videojuego.getPrecio()+" €");
+		textFieldPrecio.setText(videojuego.getPrecio() + " €");
 		textFieldPrecio.setFont(new Font("Lucida Grande", Font.PLAIN, 18));
 		textFieldPrecio.setEditable(false);
 		textFieldPrecio.setColumns(10);
@@ -127,21 +127,6 @@ public class Detalles extends JFrame{
 		textFieldStock.setForeground(null);
 		textFieldStock.setColumns(10);
 		textFieldStock.setBounds(188, 335, 150, 26);
-		if(videojuego.getStock() > 0) {
-			textFieldStock.setText("DISPONIBLE");
-			textFieldStock.setForeground(Color.GREEN);
-		}
-		else {
-			textFieldStock.setText("NO DISPONIBLE");
-			textFieldStock.setForeground(Color.RED);
-		}
-		panelRellenar.add(textFieldStock);
-
-		btnDescripcion = new JButton("Ver descripción");
-		btnDescripcion.addActionListener(new BtnActionListener());
-		btnDescripcion.setFont(new Font("Lucida Grande", Font.PLAIN, 16));
-		btnDescripcion.setBounds(132, 104, 197, 48);
-		panelRellenar.add(btnDescripcion);
 
 		panelBotones = new JPanel();
 		panelBotones.setBackground(new Color(72, 79, 84));
@@ -149,25 +134,31 @@ public class Detalles extends JFrame{
 		panelBotones.setForeground(new Color(72, 79, 84, 255));
 		panelRellenar.add(panelBotones);
 
+		btnComprar = new JButton("Comprar");
+		btnComprar.setBounds(239, 6, 183, 36);
+		btnComprar.setFont(new Font("Lucida Grande", Font.PLAIN, 18));
+		panelBotones.add(btnComprar);
+		btnComprar.addActionListener(new BtnActionListener());
+		panelBotones.add(btnComprar);
+
+		btnDescripcion = new JButton("Ver descripción");
+		btnDescripcion.addActionListener(new BtnActionListener());
+		btnDescripcion.setFont(new Font("Lucida Grande", Font.PLAIN, 16));
+		btnDescripcion.setBounds(132, 104, 197, 48);
+		panelRellenar.add(btnDescripcion);
+
 		btnValoracion = new JButton("Valoración");
-		btnValoracion.setBounds(422, 6, 135, 30);
+		btnValoracion.setBounds(422, 6, 135, 36);
 		btnValoracion.setFont(new Font("Lucida Grande", Font.PLAIN, 18));
 		btnValoracion.addActionListener(new BtnActionListener());
 		panelBotones.add(btnValoracion);
 
 		btnVolver = new JButton("Volver");
-		btnVolver.setBounds(125, 6, 114, 30);
+		btnVolver.setBounds(125, 6, 114, 36);
 		btnVolver.setFont(new Font("Lucida Grande", Font.PLAIN, 18));
 		btnVolver.addActionListener(new BtnActionListener());
 		panelBotones.setLayout(null);
 		panelBotones.add(btnVolver);
-
-		btnComprar = new JButton("Comprar");
-		btnComprar.setBounds(239, 6, 183, 30);
-		btnComprar.setFont(new Font("Lucida Grande", Font.PLAIN, 18));
-		panelBotones.add(btnComprar);
-		btnComprar.addActionListener(new BtnActionListener());
-		panelBotones.add(btnComprar);
 
 		lblPlataformas = new JLabel("  Plataformas");
 		lblPlataformas.setOpaque(true);
@@ -178,28 +169,35 @@ public class Detalles extends JFrame{
 		panelRellenar.add(lblPlataformas);
 
 		textFieldPlataformas = new JTextField();
-		textFieldPlataformas.setText(" "+videojuego.getPlataformas());
+		textFieldPlataformas.setText(" " + videojuego.getPlataformas());
 		textFieldPlataformas.setFont(new Font("Lucida Grande", Font.PLAIN, 18));
 		textFieldPlataformas.setEditable(false);
 		textFieldPlataformas.setColumns(10);
 		textFieldPlataformas.setBounds(208, 262, 247, 26);
 		panelRellenar.add(textFieldPlataformas);
 
+		if (videojuego.getStock() > 0) {
+			textFieldStock.setText("DISPONIBLE");
+			textFieldStock.setForeground(Color.GREEN);
+		} else {
+			textFieldStock.setText("NO DISPONIBLE");
+			textFieldStock.setForeground(Color.RED);
+			btnComprar.setEnabled(false);
+		}
+		panelRellenar.add(textFieldStock);
 
 		frame.setLocationRelativeTo(null);
 		frame.setResizable(false);
 		frame.setVisible(true);
 	}
 
-
 	class BtnActionListener implements ActionListener {
-
 
 		public void actionPerformed(ActionEvent e) {
 
-			if(e.getSource() == btnComprar) {
+			if (e.getSource() == btnComprar) {
 				try {
-					new CompraFrame(principal,inicio);
+					new CompraFrame(principal, inicio);
 				} catch (ClassNotFoundException e1) {
 					// TODO Auto-generated catch block
 					e1.printStackTrace();
@@ -214,7 +212,7 @@ public class Detalles extends JFrame{
 			}
 			if (e.getSource() == btnValoracion) {
 				try {
-					new ValoracionFrame(videojuego,inicio);
+					new ValoracionFrame(videojuego, inicio);
 				} catch (ClassNotFoundException e1) {
 					// TODO Auto-generated catch block
 					e1.printStackTrace();
@@ -223,8 +221,9 @@ public class Detalles extends JFrame{
 					e1.printStackTrace();
 				}
 			}
-			if(e.getSource() == btnDescripcion) {
-				JOptionPane.showMessageDialog(null, videojuego.getDescripcion(),videojuego.getNombre(),JOptionPane.INFORMATION_MESSAGE);
+			if (e.getSource() == btnDescripcion) {
+				JOptionPane.showMessageDialog(null, videojuego.getDescripcion(), videojuego.getNombre(),
+						JOptionPane.INFORMATION_MESSAGE);
 			}
 			if (e.getSource() == btnVolver) {
 				frame.dispose();

@@ -40,6 +40,7 @@ public class Intro{
         progressBar.setStringPainted(false); // Mostrar porcentaje
         frame.getContentPane().add(progressBar);
 
+		frame.setResizable(false);
         frame.setVisible(true);
 
         // Configurar temporizador para simular progreso de carga

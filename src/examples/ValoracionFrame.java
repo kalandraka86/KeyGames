@@ -24,7 +24,7 @@ import mvc.Valoracion;
 import mvc.ValoracionService;
 import mvc.Videojuego;
 
-public class ValoracionFrame extends JFrame {
+public class ValoracionFrame extends JFrame{
 
 	private PadreJFrame frame = new PadreJFrame();
 	private JLabel lblTitulo;
@@ -39,7 +39,6 @@ public class ValoracionFrame extends JFrame {
 	private Inicio inicio;
 //	System.out.println(inicio.usuarioSeleccionado());
 
-
 	public ValoracionFrame(Videojuego videojuego, Inicio i) throws ClassNotFoundException, SQLException {
 		this.videojuego = videojuego;
 		inicio = i;
@@ -48,10 +47,12 @@ public class ValoracionFrame extends JFrame {
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frame.getContentPane().setLayout(null);
 
-		lblTitulo = new JLabel(videojuego.getNombre());
+		lblTitulo = new JLabel("  "+videojuego.getNombre());
+		lblTitulo.setBackground(new Color(119, 128, 136));
+		lblTitulo.setOpaque(true);
 		lblTitulo.setFont(new Font("Lucida Grande", Font.PLAIN, 18));
 		lblTitulo.setForeground(new Color(255, 255, 255));
-		lblTitulo.setBounds(30, 28, 356, 26);
+		lblTitulo.setBounds(30, 28, 283, 26);
 		frame.getContentPane().add(lblTitulo);
 
 		textArea = new JTextArea();
@@ -75,11 +76,15 @@ public class ValoracionFrame extends JFrame {
 		panel.add(estrellas);
 		estrellas.setLayout(null);
 
-		lblNewLabel = new JLabel("Valoración: 1");
+		lblNewLabel = new JLabel("  Valoración: 1");
+		lblNewLabel.setOpaque(true);
+		lblNewLabel.setBackground(new Color(119, 128, 136));
 		lblNewLabel.setForeground(Color.white);
 		lblNewLabel.setFont(new Font("Lucida Grande", Font.PLAIN, 18));
-		lblNewLabel.setBounds(339, 211, 137, 76);
+		lblNewLabel.setBounds(339, 217, 137, 65);
 		frame.getContentPane().add(lblNewLabel);
+
+		frame.setResizable(false);
 		frame.setLocationRelativeTo(null);
 		frame.setVisible(true);
 
@@ -127,12 +132,13 @@ public class ValoracionFrame extends JFrame {
 			String comentario = textArea.getText();
 			lblNewLabel.getText().split(" ");
 			String[] partes = lblNewLabel.getText().split(" ");
-			int nota = Integer.parseInt(partes[1]);
-			;
+			int nota = 0;
+			
 			if (comentario.equalsIgnoreCase("")) {
-				JOptionPane.showMessageDialog(this, "Por favor introduzca un comentario válido");
+				JOptionPane.showMessageDialog(this, "Por favor introduzca un comentario válido","COMENTARIO VACÍO",JOptionPane.ERROR_MESSAGE);
 			} else {
 				relleno = true;
+				nota = Integer.parseInt(partes[1]);
 			}
 
 			if (relleno) {
@@ -142,7 +148,7 @@ public class ValoracionFrame extends JFrame {
 				int codigoVideojuego = videojuego.getCodigo();
 				// hay que obtener codigo de usuario
 
-				val = new Valoracion(codigoVideojuego,codigoUsuario, nota, comentario);
+				val = new Valoracion(codigoVideojuego, codigoUsuario, nota, comentario);
 				valoraciones.add(val);
 
 				services.saveValoracion(conexion, val);

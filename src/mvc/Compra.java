@@ -2,15 +2,14 @@ package mvc;
 
 import java.util.Date;
 
-
 public class Compra {
-	
+
 	private int codVideojuego;
 	private int codUsuario;
-	private java.sql.Date fechaCompra;
+	private java.sql.Timestamp fechaCompra;
 	private int unidades;
-	
-	public Compra(int codVideojuego, int codUsuario, java.sql.Date fechaCompra, int unidades) {
+
+	public Compra(int codVideojuego, int codUsuario, java.sql.Timestamp fechaCompra, int unidades) {
 		super();
 		this.codVideojuego = codVideojuego;
 		this.codUsuario = codUsuario;
@@ -38,11 +37,11 @@ public class Compra {
 		this.codUsuario = codUsuario;
 	}
 
-	public java.sql.Date getFechaCompra() {
+	public java.sql.Timestamp getFechaCompra() {
 		return fechaCompra;
 	}
 
-	public void setFechaCompra(java.sql.Date fechaCompra) {
+	public void setFechaCompra(java.sql.Timestamp fechaCompra) {
 		this.fechaCompra = fechaCompra;
 	}
 
@@ -59,7 +58,5 @@ public class Compra {
 		return "Compra [codVideojuego=" + codVideojuego + ", codUsuario=" + codUsuario + ", fechaCompra=" + fechaCompra
 				+ ", unidades=" + unidades + "]";
 	}
-	
-	
-	
+
 }
