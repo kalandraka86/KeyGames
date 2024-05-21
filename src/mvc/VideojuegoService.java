@@ -5,7 +5,9 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 public class VideojuegoService {
 	
@@ -82,4 +84,18 @@ private final String tabla = "Videojuego";
 		}
 		return videojuegos;
 	}
+	
+	 public List<String> getAllGenero(Connection conexion) throws SQLException {
+	        Set<String> generosSet = new HashSet<>();
+	        try {
+	            PreparedStatement consulta = conexion.prepareStatement("SELECT DISTINCT Genero FROM " + this.tabla);
+	            ResultSet resultado = consulta.executeQuery();
+	            while(resultado.next()) {
+	                generosSet.add(resultado.getString("Genero"));
+	            }
+	        } catch(SQLException ex) {
+	            throw new SQLException(ex);
+	        }
+	        return new ArrayList<>(generosSet);
+	    }
 }
