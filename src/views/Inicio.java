@@ -103,9 +103,9 @@ public class Inicio extends JFrame {
 	                    
 	                    String username = nameText.getText();
 	                    if (service.esAdmin(conex.obtener(), username)) {
-	                        new ListVideojuegos().setVisible(true); // Abre el frame de administrador
+	                        new ListVideojuegos().setVisible(true);
 	                    } else {
-	                        new Principal(Inicio.this).setVisible(true); // Abre el frame de usuario regular
+	                    	new Principal(Inicio.this);
 	                    }
 	                } else {
 	                    JOptionPane.showMessageDialog(null, "Compruebe que están bien introducidos los datos", "ERROR", JOptionPane.ERROR_MESSAGE);
