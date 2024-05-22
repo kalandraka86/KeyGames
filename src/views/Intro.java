@@ -26,7 +26,7 @@ public class Intro{
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frame.getContentPane().setLayout(null);
 		frame.setLocationRelativeTo(null);
-		
+	
 		
         ImageIcon imagen = new ImageIcon("imagenes/logosin.png"); 
 		imagenlbl = new JLabel(imagen);

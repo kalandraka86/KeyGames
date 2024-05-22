@@ -31,6 +31,7 @@ public class ListVideojuegos extends JFrame {
     private JButton estadisticas;
     private JButton pedidos;
     private JButton clientes;
+    private JButton salir;
     private final VideojuegoService services = new VideojuegoService();
     private List<Videojuego> videojuegos;
     private JComboBox<String> comboBoxGenero;
@@ -68,10 +69,14 @@ public class ListVideojuegos extends JFrame {
         clientes = new JButton("Clientes");
         clientes.addActionListener(new ClientesActionListener());
         clientes.setFont(new Font("Tahoma", Font.PLAIN, 20));
+        salir = new JButton ("Salir");
+        salir.addActionListener(new SalirActionListener());
+        salir.setFont(new Font("Tahoma", Font.PLAIN, 20));clientes.setFont(new Font("Tahoma", Font.PLAIN, 20));
 
         panelInferior.add(estadisticas);
         panelInferior.add(pedidos);
         panelInferior.add(clientes);
+        panelInferior.add(salir);
 
         JPanel panelSuperior = new JPanel();
         contentPane.add(panelSuperior, BorderLayout.NORTH);
@@ -150,6 +155,22 @@ public class ListVideojuegos extends JFrame {
         public void actionPerformed(ActionEvent e) {
             dispose();
             new ListCompra().setVisible(true);
+
+        }
+    }
+    
+    private class SalirActionListener implements ActionListener {
+        public void actionPerformed(ActionEvent e) {
+            dispose();
+            try {
+				new Inicio().setVisible(true);
+			} catch (ClassNotFoundException e1) {
+				// TODO Auto-generated catch block
+				e1.printStackTrace();
+			} catch (SQLException e1) {
+				// TODO Auto-generated catch block
+				e1.printStackTrace();
+			}
 
         }
     }
