@@ -1,4 +1,4 @@
-package mvc;
+package views;
 
 import java.awt.Image;
 import java.awt.event.ActionEvent;
@@ -15,6 +15,10 @@ import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 import javax.swing.border.EmptyBorder;
+
+import models.Usuario;
+import services.Conexion;
+import services.UsuarioService;
 
 
 public class MiCuentaFrame extends JFrame {

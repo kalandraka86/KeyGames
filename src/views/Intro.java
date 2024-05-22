@@ -1,4 +1,4 @@
-package mvc;
+package views;
 
 import java.awt.Color;
 import java.sql.SQLException;
@@ -10,7 +10,7 @@ import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JProgressBar;
 
-import examples.PadreJFrame;
+import models.PadreJFrame;
 
 public class Intro{
 

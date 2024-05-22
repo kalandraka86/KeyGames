@@ -17,8 +17,8 @@ import org.jfree.chart.ChartPanel;
 import org.jfree.chart.JFreeChart;
 import org.jfree.data.category.DefaultCategoryDataset;
 
-import mvc.Compra;
-import mvc.CompraService;
+import models.Compra;
+import services.CompraService;
 
 public class FrameEstadisticas extends JFrame {
 
@@ -48,7 +48,7 @@ public class FrameEstadisticas extends JFrame {
     private List<Compra> obtenerCompras() {
         try {
             CompraService compraService = new CompraService();
-            Connection conexion = mvc.Conexion.obtener();
+            Connection conexion = services.Conexion.obtener();
             return compraService.getAllCompras(conexion);
         } catch (Exception ex) {
             ex.printStackTrace();

@@ -18,8 +18,10 @@ import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.border.EmptyBorder;
 import javax.swing.table.DefaultTableModel;
-import mvc.Videojuego;
-import mvc.VideojuegoService;
+
+import models.Videojuego;
+import services.Conexion;
+import services.VideojuegoService;
 
 public class ListVideojuegos extends JFrame {
 
@@ -92,7 +94,7 @@ public class ListVideojuegos extends JFrame {
     private void cargarGeneros() {
         try {
             // Obtener los géneros disponibles desde la base de datos
-            List<String> generos = services.getAllGenero(mvc.Conexion.obtener());
+            List<String> generos = services.getAllGenero(Conexion.obtener());
             comboBoxGenero.setModel(new DefaultComboBoxModel<String>(generos.toArray(new String[0])));
         } catch (SQLException | ClassNotFoundException ex) {
             ex.printStackTrace();
@@ -103,7 +105,7 @@ public class ListVideojuegos extends JFrame {
     private void showVideojuego() {
 
         try {
-            this.videojuegos = this.services.getAllVideojuegos(mvc.Conexion.obtener());
+            this.videojuegos = this.services.getAllVideojuegos(Conexion.obtener());
             tabla.setModel(new DefaultTableModel(new Object[][] {
 
             }, new String[] { "Código", "Nombre", "Descripción", "Genero", "Portada", "Stock" }));

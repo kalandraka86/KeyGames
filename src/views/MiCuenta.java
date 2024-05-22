@@ -1,4 +1,4 @@
-package examples;
+package views;
 
 import java.awt.EventQueue;
 
@@ -12,8 +12,9 @@ import javax.swing.JTextField;
 import javax.swing.JButton;
 import javax.swing.SwingConstants;
 
-import mvc.Inicio;
-import mvc.Usuario;
+import models.PadreJFrame;
+import models.Usuario;
+
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 

@@ -1,4 +1,6 @@
-package mvc;
+package exe;
+
+import views.Intro;
 
 public class Ejecucion {
 

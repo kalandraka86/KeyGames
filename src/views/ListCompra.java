@@ -13,8 +13,11 @@ import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.border.EmptyBorder;
 import javax.swing.table.DefaultTableModel;
-import mvc.Compra;
-import mvc.CompraService;
+
+import models.Compra;
+import services.CompraService;
+import services.Conexion;
+
 import java.awt.event.ActionListener;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
@@ -64,7 +67,7 @@ public class ListCompra extends JFrame {
 
     private void showCompras() {
         try {
-            this.compras = this.services.getAllCompras(mvc.Conexion.obtener());
+            this.compras = this.services.getAllCompras(Conexion.obtener());
             DefaultTableModel dtm = new DefaultTableModel(new Object[][] {}, new String[] { "Cod-Usuario", "Cod-Videojuego", "Fecha-Compra", "Unidades" });
             tabla.setModel(dtm);
             for (Compra compra : this.compras) {

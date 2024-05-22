@@ -1,4 +1,4 @@
-package mvc;
+package models;
 
 import java.util.Date;
 

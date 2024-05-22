@@ -1,4 +1,4 @@
-package examples;
+package views;
 
 import java.awt.Color;
 import java.awt.Font;
@@ -16,13 +16,13 @@ import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
 
-import mvc.CompraService;
-import mvc.Conexion;
-import mvc.Inicio;
-import mvc.Usuario;
-import mvc.Valoracion;
-import mvc.ValoracionService;
-import mvc.Videojuego;
+import models.FiveStarsPanel;
+import models.PadreJFrame;
+import models.Valoracion;
+import models.Videojuego;
+import services.CompraService;
+import services.Conexion;
+import services.ValoracionService;
 
 public class ValoracionFrame extends JFrame{
 

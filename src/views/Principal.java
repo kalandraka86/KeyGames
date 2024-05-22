@@ -1,4 +1,4 @@
-package examples;
+package views;
 
 import java.awt.BorderLayout;
 import java.awt.Color;
@@ -23,9 +23,9 @@ import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 
-import mvc.Inicio;
-import mvc.Videojuego;
-import mvc.VideojuegoService;
+import models.PadreJFrame;
+import models.Videojuego;
+import services.VideojuegoService;
 
 public class Principal extends JFrame {
 
@@ -48,7 +48,7 @@ public class Principal extends JFrame {
 		inicio = i;
 		videojuegos.clear();
 		VideojuegoService videojuegoservice = new VideojuegoService();
-		videojuegos = videojuegoservice.getAllVideojuegos(mvc.Conexion.obtener());
+		videojuegos = videojuegoservice.getAllVideojuegos(services.Conexion.obtener());
 		frame = new PadreJFrame();
 		frame.setTitle("Catálogo");
 		frame.setBounds(100, 100, 571, 376);

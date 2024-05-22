@@ -1,4 +1,4 @@
-package mvc;
+package views;
 
 import java.awt.EventQueue;
 import java.awt.Font;
@@ -17,7 +17,11 @@ import javax.swing.JOptionPane;
 import javax.swing.JPasswordField;
 import javax.swing.JTextField;
 
-import examples.PadreJFrame;
+import models.PadreJFrame;
+import models.Usuario;
+import services.Conexion;
+import services.UsuarioService;
+
 import java.awt.Color;
 
 public class Registro extends JFrame {

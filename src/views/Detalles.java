@@ -1,4 +1,4 @@
-package examples;
+package views;
 
 import java.awt.BorderLayout;
 import java.awt.Color;
@@ -16,9 +16,8 @@ import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 
-import mvc.CompraFrame;
-import mvc.Inicio;
-import mvc.Videojuego;
+import models.PadreJFrame;
+import models.Videojuego;
 
 public class Detalles extends JFrame { 
 

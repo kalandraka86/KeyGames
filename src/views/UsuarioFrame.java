@@ -15,9 +15,9 @@ import javax.swing.JTable;
 import javax.swing.border.EmptyBorder;
 import javax.swing.table.DefaultTableModel;
 
-import mvc.Registro;
-import mvc.Usuario;
-import mvc.UsuarioService;
+import models.Usuario;
+import services.UsuarioService;
+
 import java.awt.Font;
 import java.awt.event.ActionListener;
 import java.awt.event.WindowAdapter;
@@ -89,7 +89,7 @@ public class UsuarioFrame extends JFrame {
 
 	public void showUser() {
 		try {
-			this.usuarios = this.userService.getAllUsuarios(mvc.Conexion.obtener());
+			this.usuarios = this.userService.getAllUsuarios(services.Conexion.obtener());
 			table.setModel(new javax.swing.table.DefaultTableModel(new Object[][] {
 
 			}, new String[] { "Código", "Username", "Password", "Direccion", "Correo", "Rol", "Telefono" }));
@@ -139,7 +139,7 @@ public class UsuarioFrame extends JFrame {
 					try {
 						Usuario usuario = new Usuario();
 						usuario.setCodigo(codigo);
-						userService.remove(mvc.Conexion.obtener(), usuario);
+						userService.remove(services.Conexion.obtener(), usuario);
 						JOptionPane.showMessageDialog(UsuarioFrame.this, "Usuario eliminado correctamente");
 						showUser();
 					} catch (SQLException | ClassNotFoundException ex) {

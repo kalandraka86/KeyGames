@@ -23,9 +23,9 @@ import javax.swing.JPasswordField;
 import javax.swing.JTable;
 import javax.swing.JTextField;
 
-import mvc.Conexion;
-import mvc.Usuario;
-import mvc.UsuarioService;
+import models.Usuario;
+import services.Conexion;
+import services.UsuarioService;
 
 public class Insertar extends JFrame {
 	

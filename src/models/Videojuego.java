@@ -1,4 +1,4 @@
-package mvc;
+package models;
 
 public class Videojuego {
 	private int Codigo;

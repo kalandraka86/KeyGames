@@ -1,4 +1,4 @@
-package mvc;
+package views;
 
 import java.awt.Color;
 import java.awt.Font;
@@ -18,8 +18,12 @@ import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JTextField;
 
-import examples.PadreJFrame;
-import examples.Principal;
+import models.Compra;
+import models.PadreJFrame;
+import models.Usuario;
+import models.Videojuego;
+import services.CompraService;
+import services.Conexion;
 
 public class CompraFrame extends JFrame {
 	private static final long serialVersionUID = 1L;

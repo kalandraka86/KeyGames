@@ -1,15 +1,17 @@
 package views;
 
 import javax.swing.*;
+
+import models.Usuario;
+
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.sql.Connection;
 import java.sql.SQLException;
 
-import mvc.Conexion;
-import mvc.Usuario;
-import mvc.UsuarioService;
+import services.Conexion;
+import services.UsuarioService;
 
 public class EditUserFrame extends JFrame {
 

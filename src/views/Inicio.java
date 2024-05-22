@@ -1,4 +1,4 @@
-package mvc;
+package views;
 
 import java.awt.Color;
 import java.awt.Font;
@@ -14,8 +14,9 @@ import javax.swing.JPasswordField;
 import javax.swing.JTextField;
 import javax.swing.SwingConstants;
 
-import examples.Principal;
-import views.ListVideojuegos;
+import models.Usuario;
+import services.Conexion;
+import services.UsuarioService;
 
 public class Inicio extends JFrame {
 
