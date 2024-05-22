@@ -47,6 +47,8 @@ public class Registro extends JFrame {
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frame.getContentPane().setLayout(null);
 
+		frame.setTitle("Registro");
+
 		lblUsername = new JLabel("Usuario");
 		lblUsername.setForeground(new Color(254, 255, 255));
 		lblUsername.setFont(new Font("Lucida Grande", Font.PLAIN, 16));
@@ -102,6 +104,7 @@ public class Registro extends JFrame {
 		frame.getContentPane().add(telfLabel);
 
 		textTelf = new JTextField();
+		textTelf.setText("Número de máximo 11 dígitos");
 		textTelf.setBackground(new Color(231, 162, 83));
 		textTelf.setColumns(10);
 		textTelf.setBounds(249, 229, 218, 19);
@@ -162,7 +165,8 @@ public class Registro extends JFrame {
 					telefono = Integer.parseInt(textTelf.getText());
 					relleno = true;
 				} catch (NumberFormatException e) {
-					JOptionPane.showMessageDialog(this, "Por favor, introduzca un número de teléfono válido.");
+					JOptionPane.showMessageDialog(this, "Por favor, introduzca un número de teléfono válido",
+							"ERROR TELÉFONO", JOptionPane.ERROR_MESSAGE);
 				}
 			}
 
@@ -187,10 +191,12 @@ public class Registro extends JFrame {
 			}
 		} catch (SQLException ex) {
 			System.out.println(ex.getMessage());
-			JOptionPane.showMessageDialog(this, "Ha surgido un error y no se han podido recuperar los registros");
+			JOptionPane.showMessageDialog(this,
+					"Ha surgido un error y no se han podido recuperar los registros de usuarios");
 		} catch (ClassNotFoundException ex) {
 			System.out.println(ex);
-			JOptionPane.showMessageDialog(this, "Ha surgido un error y no se han podido recuperar los registros");
+			JOptionPane.showMessageDialog(this,
+					"Ha surgido un error y no se han podido recuperar los registros de usuarios");
 		}
 
 	}
