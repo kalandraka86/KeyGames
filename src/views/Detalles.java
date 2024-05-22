@@ -72,7 +72,7 @@ public class Detalles extends JFrame {
 		panelRellenar.add(lblPrecio);
 
 		textFieldPrecio = new JTextField();
-		textFieldPrecio.setText(videojuego.getPrecio() + " €");
+		textFieldPrecio.setText("  "+videojuego.getPrecio() + " €");
 		textFieldPrecio.setFont(new Font("Lucida Grande", Font.PLAIN, 18));
 		textFieldPrecio.setEditable(false);
 		textFieldPrecio.setColumns(10);
@@ -88,7 +88,7 @@ public class Detalles extends JFrame {
 		panelRellenar.add(lblNombre);
 
 		textField_Nombre = new JTextField();
-		textField_Nombre.setText(videojuego.getNombre());
+		textField_Nombre.setText("  "+videojuego.getNombre());
 		textField_Nombre.setFont(new Font("Lucida Grande", Font.PLAIN, 18));
 		textField_Nombre.setEditable(false);
 		textField_Nombre.setColumns(10);
@@ -104,7 +104,7 @@ public class Detalles extends JFrame {
 		panelRellenar.add(lblGenero);
 
 		txtDdd = new JTextField();
-		txtDdd.setText(videojuego.getGenero());
+		txtDdd.setText("  "+videojuego.getGenero());
 		txtDdd.setFont(new Font("Lucida Grande", Font.PLAIN, 18));
 		txtDdd.setEditable(false);
 		txtDdd.setColumns(10);
@@ -168,7 +168,7 @@ public class Detalles extends JFrame {
 		panelRellenar.add(lblPlataformas);
 
 		textFieldPlataformas = new JTextField();
-		textFieldPlataformas.setText(" " + videojuego.getPlataformas());
+		textFieldPlataformas.setText("  "+videojuego.getPlataformas());
 		textFieldPlataformas.setFont(new Font("Lucida Grande", Font.PLAIN, 18));
 		textFieldPlataformas.setEditable(false);
 		textFieldPlataformas.setColumns(10);
@@ -225,7 +225,6 @@ public class Detalles extends JFrame {
 			}
 			if (e.getSource() == btnVolver) {
 				frame.dispose();
-				dispose();
 			}
 		}
 	}

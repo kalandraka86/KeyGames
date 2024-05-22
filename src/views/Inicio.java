@@ -31,7 +31,7 @@ public class Inicio extends JFrame {
 	private Conexion conex = new Conexion();
 
 	public Inicio() throws ClassNotFoundException, SQLException {
-		super("LOG IN");
+		super("Log in");
 		setBounds(100, 100, 450, 300);
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		getContentPane().setLayout(null);
@@ -100,6 +100,7 @@ public class Inicio extends JFrame {
 	            try {
 	                if (service.validarUsuario(conex.obtener(), nameText.getText(), new String(passText.getPassword()))) {
 	                    JOptionPane.showMessageDialog(null, "Loggeo con éxito!!!", "LOGEANDO", JOptionPane.INFORMATION_MESSAGE);
+
 	                    
 	                    String username = nameText.getText();
 	                    if (service.esAdmin(conex.obtener(), username)) {

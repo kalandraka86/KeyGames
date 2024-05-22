@@ -1,4 +1,4 @@
-package views;
+package services;
 
 import java.awt.Color;
 import java.sql.SQLException;
@@ -11,6 +11,7 @@ import javax.swing.JLabel;
 import javax.swing.JProgressBar;
 
 import models.PadreJFrame;
+import views.Inicio;
 
 public class Intro{
 
