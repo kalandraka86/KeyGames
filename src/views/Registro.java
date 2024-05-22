@@ -158,8 +158,12 @@ public class Registro extends JFrame {
 				JOptionPane.showMessageDialog(this,
 						"Por favor complete todos los campos y verifique que el nombre de usuario no esté en uso.");
 			} else {
-				telefono = Integer.parseInt(textTelf.getText());
-				relleno = true;
+				try {
+					telefono = Integer.parseInt(textTelf.getText());
+					relleno = true;
+				} catch (NumberFormatException e) {
+					JOptionPane.showMessageDialog(this, "Por favor, introduzca un número de teléfono válido.");
+				}
 			}
 
 			if (relleno) {
