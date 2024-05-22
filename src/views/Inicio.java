@@ -132,4 +132,3 @@ public class Inicio extends JFrame {
 		return service.getUsuario(conex.obtener(), nameText.getText(), new String(passText.getPassword()));
 	}
 }
-
